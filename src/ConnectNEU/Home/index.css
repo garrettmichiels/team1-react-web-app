@@ -1,0 +1,18 @@
+.rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+.stars {
+    cursor: pointer;
+}
+
+.blurred {
+    filter: blur(4px);
+}
+
+.card-body {
+    background-color: #CBD5C0 !important;
+}

@@ -4,10 +4,12 @@ import logo from "./logo.svg";
 import "./App.css";
 import Login from "./Users/Login";
 import Home from "./ConnectNEU/Home";
+import Navigation from "./ConnectNEU/Navigation";
 
 function App() {
 	return (
 		<div className="App">
+			<Navigation />
 			<HashRouter>
 				<Routes>
 					<Route path="/" element={<Navigate to="/Home" />} />
