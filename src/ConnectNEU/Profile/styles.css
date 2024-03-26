@@ -1,0 +1,19 @@
+.profile * {
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.bolded {
+    font-weight: bold;
+}
+
+.fields * {
+    padding-bottom: 0px;
+}
+
+.field{
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 10px;
+    background: white;
+}
