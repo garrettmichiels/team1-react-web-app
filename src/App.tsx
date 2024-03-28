@@ -9,8 +9,8 @@ import Navigation from "./ConnectNEU/Navigation";
 function App() {
 	return (
 		<div className="App">
-			<Navigation />
 			<HashRouter>
+				<Navigation />
 				<Routes>
 					<Route path="/" element={<Navigate to="/Home" />} />
 					<Route path="/Home/" element={<Home />} />
