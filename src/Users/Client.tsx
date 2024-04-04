@@ -35,9 +35,9 @@ export const logout = async () => {
   return response.data;
 };
 
-export const like = async () => {
+export const save = async () => {
   const response = await axiosWithCredentials.post(
-    `${API_BASE}/api/like/:companyId`
+    `${API_BASE}/api/save/:jobId`
   );
   return response.data;
 };
