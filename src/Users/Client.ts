@@ -1,13 +1,13 @@
 import axios from "axios";
-const API_BASE = process.env.REACT_APP_API_BASE;
 
 const axiosWithCredentials = axios.create({
+  
   withCredentials: true,
 });
 
 export const registerUser = async (user: any) => {
   const response = await axiosWithCredentials.post(
-    `${API_BASE}/api/users/register`,
+    "http://localhost:4000/api/users/register",
     user
   );
   return response.data;
@@ -15,7 +15,7 @@ export const registerUser = async (user: any) => {
 
 export const loginUser = async (user: any) => {
   const response = await axiosWithCredentials.post(
-    `${API_BASE}/api/users/login`,
+    "http://localhost:4000/api/users/login",
     user
   );
   return response.data;
@@ -23,21 +23,14 @@ export const loginUser = async (user: any) => {
 
 export const profile = async () => {
   const response = await axiosWithCredentials.get(
-    `${API_BASE}/api/users/profile`
+    "http://localhost:4000/api/users/profile"
   );
   return response.data;
 };
 
-export const logout = async () => {
-  const response = await axiosWithCredentials.post(
-    `${API_BASE}/api/users/logout`
-  );
-  return response.data;
-};
-
-export const save = async () => {
-  const response = await axiosWithCredentials.post(
-    `${API_BASE}/api/save/:jobId`
-  );
-  return response.data;
-};
+// export const logout = async () => {
+//   const response = await axiosWithCredentials.post(
+//     "http://localhost:4000/api/users/logout"
+//   );
+//   return response.data;
+// };

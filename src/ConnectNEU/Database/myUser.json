@@ -1,11 +1,14 @@
-[
+
   {
     "_id": "01",
-    "name": "Katherine Aristizabal",
+    "firstName": "Katherine",
+    "lastName" : "Aristizabal",
     "email": "aristizabalnorena.k@husky.neu.edu",
     "number": "123-345-2345",
     "major": "Computer Science",
     "industry": "Technology",
+    "dob" : "08-05-2003",
+    "role" : "Mentee",
     "coops": [
       {
         "_id": "G001",
@@ -29,4 +32,4 @@
       }
     ]
   }
-]
+
