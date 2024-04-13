@@ -2,40 +2,15 @@ import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
+import Review from "../Review";
 
 function MentorHome() {
+	const [reviews, setReviews] = useState<any[]>([]);
 	const [review, setReview] = useState({
 		company: "Question",
 		rating: 0,
 		text: "Review text",
 	});
-	const sampleQuestions = [
-		{
-			title: "Question 1 Title",
-			user: "User 1",
-			text: "This is some sample text, a sample question for a sample mentor.",
-		},
-		{
-			title: "Question 2 Title",
-			user: "User 2",
-			text: "Question text 2",
-		},
-		{
-			title: "Question 3 Title",
-			user: "User 3",
-			text: "Question text 3",
-		},
-		{
-			title: "Question 4 Title",
-			user: "User 4",
-			text: "Question text 4",
-		},
-		{
-			title: "Question 5 Title",
-			user: "User 5",
-			text: "Question text 5",
-		},
-	];
 	return (
 		<div className="p-3">
 			<div className="card shadow-sm">
@@ -45,7 +20,7 @@ function MentorHome() {
 						<input
 							className="flex-grow-1 mb-2 form-control"
 							type="text"
-							placeholder="Question"
+							placeholder="Company Name"
 							onChange={(e) => {
 								setReview({ ...review, company: e.target.value });
 							}}
@@ -89,23 +64,16 @@ function MentorHome() {
 				</div>
 			</div>
 			<div className="my-3">
-				<h2>Questions From Your Mentees</h2>
-				{sampleQuestions.map((question, index) => {
-					return (
-						<div className="card shadow-sm m-3" key={index}>
-							<span className="card-body">
-								<h4>{question.title}</h4>
-								<Link to={""}>{question.user}</Link>
-								<p>{question.text}</p>
-								<span className="float-end">
-									<button type="button" className="submit-button">
-										Answer Question
-									</button>
-								</span>
-							</span>
-						</div>
-					);
-				})}
+				<h2>Reviews Where You've Worked</h2>
+				<ul>
+					{reviews.map((r) => {
+						return (
+							<li>
+								<Review review={r} />
+							</li>
+						);
+					})}
+				</ul>
 			</div>
 		</div>
 	);
