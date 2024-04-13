@@ -5,7 +5,7 @@ import "./App.css";
 import Login from "./ConnectNEU/Account/Login";
 import Home from "./ConnectNEU/Home";
 import Navigation from "./ConnectNEU/Navigation";
-import Profile from "./ConnectNEU/Account/Profile";
+import Account from "./ConnectNEU/Account";
 
 function App() {
 	return (
@@ -16,7 +16,7 @@ function App() {
 					<Route path="/" element={<Navigate to="/Home" />} />
 					<Route path="/Home/" element={<Home />} />
 					<Route path="/Login/*" element={<Login />} />
-					<Route path="/Profile/*" element={<Profile />} />
+					<Route path="/Account/*" element={<Account />} />
 					<Route path="/Details/*" element={<h1>Details</h1>} />
 					<Route path="/Search/*" element={<h1>Search</h1>} />
 				</Routes>
