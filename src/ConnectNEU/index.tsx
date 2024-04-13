@@ -3,8 +3,8 @@ import store from "./store";
 import { Navigate, Route, Routes } from "react-router";
 import Home from "./Home";
 import Search from "./Search";
-import Login from "./Users/Login";
-import Profile from "./Profile";
+import Login from "./Account/Login";
+import Profile from "./Account/Profile";
 import Listing from "./Listing";
 export default function ConnectNEU() {
 	return (

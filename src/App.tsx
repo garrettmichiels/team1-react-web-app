@@ -2,10 +2,10 @@ import React from "react";
 import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
-import Login from "./ConnectNEU/Users/Login";
+import Login from "./ConnectNEU/Account/Login";
 import Home from "./ConnectNEU/Home";
 import Navigation from "./ConnectNEU/Navigation";
-import Profile from "./ConnectNEU/Profile";
+import Profile from "./ConnectNEU/Account/Profile";
 
 function App() {
 	return (

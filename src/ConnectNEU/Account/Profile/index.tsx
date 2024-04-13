@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css"; // Import your CSS file
-import * as client from "../../Users/Client";
+import * as client from "../../../Users/Client";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import myUser from "../Database/myUser.json";
+import myUser from "../../Database/myUser.json";
 export default function Profile() {
   const navigate = useNavigate();
   const API = "http://localhost:4000/a5/profile";
