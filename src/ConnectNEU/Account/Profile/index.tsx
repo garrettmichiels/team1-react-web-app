@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css"; // Import your CSS file
-import * as client from "../../../Users/Client";
+import * as client from "../../Users/Client";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import myUser from "../../Database/myUser.json";
+import { ReactReduxContext } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../Users/reducer";
+
 export default function Profile() {
   const navigate = useNavigate();
-  const API = "http://localhost:4000/a5/profile";
+  // const API = "http://localhost:4000/profile";
 
   const [user, setUser] = useState({ username: "", password: "" });
 
   const [profile, setProfile] = useState(myUser);
   const [editedProfile, setEditedProfile] = useState({ ...myUser });
+  const dispatch = useDispatch();
 
   const updateProfile = () => {
     //do logic to update server here
@@ -21,18 +26,39 @@ export default function Profile() {
   const [coop, setCoop] = useState({id: 1,
     title: "Google"
   });
-  const fetchProfile = async () => {
-    const profile = await client.profile();
-    setProfile(profile);
+
+  const fetchUser = async () => {
+    try {
+      console.log("in fetching user")
+      const user = await client.profile();
+      console.log(user)
+      console.log("trying to fetch user and going to set");
+      setUser(user);
+      dispatch(setCurrentUser(user));
+    } catch (error) {
+      dispatch(setCurrentUser(null));
+      navigate("/Kanbas/Account/Login");
+    }
   };
+
+  const logout = async () => {
+    await client.logout();
+    dispatch(setCurrentUser(null));
+    navigate("/Kanbas/Account/Login");
+  };
+
+  const updateUser = async () => {
+    await client.updateUser(user);
+  };
+
   useEffect(() => {
-    fetchProfile();
+    fetchUser();
   }, []);
 
-  const fetchCoopById = async (id: any) => {
-    const response = await axios.get(`${API}/${id}`);
-    setCoop(response.data);
-  };
+  // const fetchCoopById = async (id: any) => {
+  //   const response = await axios.get(`${API}/${id}`);
+  //   setCoop(response.data);
+  // };
   
   return (
     <div className="profile">
@@ -194,7 +220,7 @@ export default function Profile() {
                   <button
                     className="btn btn-secondary"
                     style={{ marginLeft: "5px", justifyContent: "end" }}
-                    onClick={() => fetchCoopById(coop.id)}
+                    // onClick={() => fetchCoopById(coop.id)}
                   >
                     Edit
                   </button>

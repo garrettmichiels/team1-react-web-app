@@ -8,18 +8,10 @@ export default function Login() {
   const login = async () => {
     try {
       const newUser = await userClient.loginUser(user);
-      navigate("/Profile");
+      navigate("/Account/Profile");
     } catch (error : any) {
       console.error(error);
       setError(error.message);
-    }
-  };
-  const signup = async () => {
-    try {
-      await userClient.signup(user);
-      navigate("/Kanbas/Account/Profile");
-    } catch (error : any) {
-      setError(error.response.data.message);
     }
   };
 

@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router";
 import { Link } from "react-router-dom";
-import Login from "../../Users/Login";
+import Login from "./Login";
 import Profile from "./Profile";
 
 
