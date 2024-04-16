@@ -2,9 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as userClient from "../Users/Client";
 export default function Login() {
-  const [user, setUser] = useState({ username: "", password: "", email: "", firstName: "", lastName: ""});
+  const [user, setUser] = useState({ _id: "",
+  username: "", 
+  password: "", 
+  email: "", 
+  firstName: "", 
+  lastName: "", 
+  role: "MENTEE",
+  major: "",
+  following: [],
+  coops: [],});
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const login = async () => {
     try {
       const newUser = await userClient.loginUser(user);

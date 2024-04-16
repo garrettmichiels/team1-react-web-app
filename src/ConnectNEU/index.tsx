@@ -1,6 +1,3 @@
-import { Provider } from "react-redux";
-import { ReactReduxContext } from 'react-redux';
-import store from "./store";
 import { Navigate, Route, Routes } from "react-router";
 import Home from "./Home";
 import Search from "./Search";
@@ -9,7 +6,6 @@ import Profile from "./Account/Profile";
 import Listing from "./Listing";
 export default function ConnectNEU() {
 	return (
-		<Provider store={store}>
 			<Routes>
 				<Route path="/" element={<Navigate to="Home" />}></Route>
 				<Route path="Home" element={<Home />}></Route>
@@ -18,6 +14,5 @@ export default function ConnectNEU() {
 				<Route path="Profile/:id/*" element={<Profile />}></Route>
 				<Route path="Details/:did" element={<Listing />}></Route>
 			</Routes>
-		</Provider>
 	);
 }

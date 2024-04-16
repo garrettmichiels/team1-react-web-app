@@ -5,6 +5,11 @@ const axiosWithCredentials = axios.create({
 });
 const USERS_API = "http://localhost:4000/api/users";
 
+export interface User { _id: string; username: string; password: string;
+  firstName: string, lastName: string, role: string; major: string,
+  following: [String],
+  coops: [String],};
+  
 export const registerUser = async (user: any) => {
   const response = await axiosWithCredentials.post(
     "http://localhost:4000/api/users/register",
@@ -14,19 +19,27 @@ export const registerUser = async (user: any) => {
 };
 
 export const loginUser = async (user: any) => {
-  console.log("login");
+  console.log("logingi person ", user)
   const response = await axiosWithCredentials.post(
     `${USERS_API}/login`,
     user
   );
-  console.log("post login response")
   return response.data;
 };
 
+
+// export const signin = async (credentials: User) => {
+//   const response = await axiosWithCredentials.post( `${USERS_API}/signin`, credentials );
+//   return response.data;
+// };
+
 export const profile = async () => {
+  
   const response = await axiosWithCredentials.post(
     `${USERS_API}/profile`
   );
+  console.log(response.data)
+
   return response.data;
 };
 
