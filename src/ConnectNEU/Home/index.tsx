@@ -4,8 +4,8 @@ import MentorHome from "./MentorHome";
 
 function Home() {
 	const loggedIn = true;
-	const isMentor = true;
-	const isMentee = false;
+	const isMentor = false;
+	const isMentee = true;
 	if (loggedIn && isMentor) {
 		return <MentorHome />;
 	} else if (loggedIn && isMentee) {

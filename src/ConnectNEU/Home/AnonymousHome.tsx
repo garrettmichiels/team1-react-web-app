@@ -1,6 +1,7 @@
 import { FaStar } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
+import Review from "../Reviews";
 
 function AnonymousHome() {
 	const sampleReviews = [
@@ -38,33 +39,8 @@ function AnonymousHome() {
 	return (
 		<div className="p-3">
 			<h2>Sign In To View Recent Reviews</h2>
-			{sampleReviews.map((review, index) => {
-				return (
-					<div className="card blurred shadow-sm m-3" key={index}>
-						<span className="d-flex">
-							<h5 className="card-title">{review.company}</h5>
-							<span className="d-flex mb-2 mx-2">
-								{[...Array(5)].map((item, index) => {
-									return (
-										<div className="stars">
-											<FaStar
-												color={
-													index < review.rating || index === review.rating
-														? "rgb(230, 230, 0)"
-														: "rgb(192,192,192)"
-												}
-											/>
-										</div>
-									);
-								})}
-							</span>
-						</span>
-						<div className="card-body">
-							<Link to={""}>{review.user}</Link>
-							<p>{review.text}</p>
-						</div>
-					</div>
-				);
+			{sampleReviews.map((review) => {
+				return <Review review={review} blur={true} />;
 			})}
 		</div>
 	);

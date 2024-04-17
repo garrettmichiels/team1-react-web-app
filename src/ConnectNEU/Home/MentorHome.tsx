@@ -2,13 +2,13 @@ import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
-import Review from "../Review";
+import Review from "../Reviews";
 
 function MentorHome() {
 	const [reviews, setReviews] = useState<any[]>([]);
 	const [review, setReview] = useState({
 		company: "Question",
-		rating: 0,
+		rating: 5,
 		text: "Review text",
 	});
 	return (
@@ -27,7 +27,7 @@ function MentorHome() {
 						/>
 						<span className="rating mb-2 mx-2">
 							{[...Array(5)].map((item, index) => {
-								const givenRating = index + 1;
+								const givenRating = index;
 								return (
 									<label>
 										<input
@@ -52,28 +52,31 @@ function MentorHome() {
 								);
 							})}
 						</span>
-						<button type="button" className="submit-button mb-2">
+						<button
+							type="button"
+							className="submit-button mb-2"
+							onClick={() => {
+								setReviews([...reviews, review]);
+							}}>
 							Submit Review
 						</button>
 					</span>
 					<div className="d-flex flex-fill">
 						<textarea
 							className="flex-grow-1 form-control"
-							placeholder="Write a review here"></textarea>
+							placeholder="Write a review here"
+							onChange={(e) => {
+								setReview({ ...review, text: e.target.value });
+							}}
+						/>
 					</div>
 				</div>
 			</div>
 			<div className="my-3">
 				<h2>Reviews Where You've Worked</h2>
-				<ul>
-					{reviews.map((r) => {
-						return (
-							<li>
-								<Review review={r} />
-							</li>
-						);
-					})}
-				</ul>
+				{reviews.map((r) => {
+					return <Review review={r} blur={false} />;
+				})}
 			</div>
 		</div>
 	);
