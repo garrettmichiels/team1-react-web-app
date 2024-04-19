@@ -6,7 +6,7 @@ export default function Navigation() {
 	const navigate = useNavigate();
 	const navigateToSearch = () => {
 		if (search) {
-			navigate(`/ConnectNEU/Search/${search}`);
+			navigate(`/Search/${search}`);
 		}
 	};
 	return (

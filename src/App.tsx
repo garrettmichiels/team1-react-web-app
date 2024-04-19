@@ -6,6 +6,7 @@ import Login from "./ConnectNEU/Account/Login";
 import Home from "./ConnectNEU/Home";
 import Navigation from "./ConnectNEU/Navigation";
 import Account from "./ConnectNEU/Account";
+import Search from "./ConnectNEU/Search";
 
 function App() {
 	return (
@@ -18,7 +19,7 @@ function App() {
 					<Route path="/Login/*" element={<Login />} />
 					<Route path="/Account/*" element={<Account />} />
 					<Route path="/Details/*" element={<h1>Details</h1>} />
-					<Route path="/Search/*" element={<h1>Search</h1>} />
+					<Route path="/Search/:query/*" element={<Search />} />
 				</Routes>
 			</HashRouter>
 		</div>
