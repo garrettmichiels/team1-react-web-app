@@ -1,0 +1,15 @@
+.fp-card-header {
+    background-color: #212529;
+    color: #f5f3ee;
+}
+
+.fp-user-link {
+    color:#212529;
+    text-decoration: none;
+    font-size: 18px !important;
+}
+
+.fp-user-link:hover {
+    color: #f5f3ee;
+    text-decoration: none;
+}

@@ -32,11 +32,12 @@ export default function Navigation() {
 								Home
 							</Link>
 						</li>
-						{/* <li className="nav-item">
-							<Link to={"/Profile"} className="nav-link">
+						
+						<li className="nav-item">
+							<Link to={"/Account/Profile"} className="nav-link">
 								Profile
 							</Link>
-						</li> */}
+						</li>
 						<li className="nav-item">
 							<Link to={"/Account"} className="nav-link">
 								Account

@@ -1,14 +1,11 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import usersReducer from "../Users/reducer"
-// export interface ConnectNEUState {
+import { configureStore } from "@reduxjs/toolkit";
 
-// }
+import userReducer from "../Users/reducer";
 
-// const store = configureStore({
-//     reducer: {
-//         users: usersReducer,
-//     }
-// });
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+  },
+});
 
-// export default 
-export default function (){}
+export default store;

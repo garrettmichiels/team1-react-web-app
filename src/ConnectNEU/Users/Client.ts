@@ -10,6 +10,10 @@ export interface User { _id: string; username: string; password: string;
   following: [String],
   coops: [String],};
   
+  export interface Company { _id: string;
+    companyName: string, companyId: string, id:String};
+  
+      
 export const registerUser = async (user: any) => {
   const response = await axiosWithCredentials.post(
     "http://localhost:4000/api/users/register",
@@ -32,6 +36,24 @@ export const loginUser = async (user: any) => {
 //   const response = await axiosWithCredentials.post( `${USERS_API}/signin`, credentials );
 //   return response.data;
 // };
+
+export const deleteCompany = async (company: any) => {
+  const response = await axiosWithCredentials.delete(
+    `${USERS_API}/${company._id}`);
+  return response.data;
+};
+
+export const deleteFollower = async (user: any, follower: any) => {
+  const response = await axiosWithCredentials.delete(
+    `${USERS_API}/${user._id}/followers/${follower._id}`);
+  return response.data;
+};
+
+export const findUserById = async (id: string) => {
+  console.log("in find U");
+  const response = await axiosWithCredentials.get(`${USERS_API}/${id}`);
+  return response.data;
+};
 
 export const profile = async () => {
   
