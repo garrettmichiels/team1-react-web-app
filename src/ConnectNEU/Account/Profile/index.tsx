@@ -24,16 +24,35 @@ export default function Profile() {
     role: "USER",
     major: "",
     following: [],
-    coops: [],
+    companies: [],
   });
+
+  const [editedProfile, setEditedProfile] = useState({
+    username: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    number: "",
+    email: "",
+    role: "USER",
+    major: "",
+    following: [],
+    companies: [],
+  });
+
 
   const fetchProfile = async () => {
     const account = await client.profile();
     setProfile(account);
+    setEditedProfile(account);
   };
   
   const save = async () => {
-    await client.updateUser(profile);
+    // const d = {...profile}
+    await client.updateUser(editedProfile);
+    setProfile(editedProfile);
+
   };
   // const signout = async () => {
   //   await client.signout();
@@ -44,46 +63,12 @@ export default function Profile() {
   useEffect(() => {
     fetchProfile();
   }, []);
-  // const [editedProfile, setEditedProfile] = useState({ ...myUser });
 
-  // const updateProfile = () => {
-  //   //do logic to update server here
-  //   setProfile(editedProfile);
-  // };
+  console.log(profile.following);
 
-  // const [coop, setCoop] = useState({id: 1,
-  //   title: "Google"
-  // });
-
-  // const fetchUserProfile = async () => {
-  //   try {
-  //     console.log("in fetching user")
-  //     const user = await client.profile();
-  //     console.log(user)
-  //     console.log("trying to fetch user and going to set");
-  //     setUser(user);
-  //   } catch (error) {
-  //     navigate("/Kanbas/Account/Login");
-  //   }
-  // };
-
-  // const updateUser = async () => {
-  //   await client.updateUser(user);
-  // };
-
-  // useEffect(() => {
-  //   fetchUserProfile();
-  // }, []);
-
-  // const fetchCoopById = async (id: any) => {
-  //   const response = await axios.get(`${API}/${id}`);
-  //   setCoop(response.data);
-  // };
-  
-  console.log(profile);
   return (
     <div className="profile">
-      {profile && (
+      {editedProfile && (
         <div>
         <div className="field">
          
@@ -92,9 +77,9 @@ export default function Profile() {
               First Name:
               </label>
               <input
-                value={profile.firstName}
+                value={editedProfile.firstName}
                 onChange={(e) =>
-                  setProfile({ ...profile, firstName: e.target.value })
+                  setEditedProfile({ ...editedProfile, firstName: e.target.value })
                 }
               />
         
@@ -104,9 +89,9 @@ export default function Profile() {
               Last Name:
               </label>
               <input
-                value={profile.lastName}
+                value={editedProfile.lastName}
                 onChange={(e) =>
-                  setProfile({ ...profile, lastName: e.target.value })
+                  setEditedProfile({ ...editedProfile, lastName: e.target.value })
                 }
               />
           
@@ -117,9 +102,9 @@ export default function Profile() {
               Email:
               </label>
               <input
-                value={profile.email}
+                value={editedProfile.email}
                 onChange={(e) =>
-                  setProfile({ ...profile, email: e.target.value })
+                  setEditedProfile({ ...editedProfile, email: e.target.value })
                 }
               />
               </div>
@@ -128,8 +113,8 @@ export default function Profile() {
             <label>
               DOB:
               </label>
-              <input value={profile.dob} type="date" onChange={(e) =>
-            setProfile({ ...profile, dob: e.target.value })}/>
+              <input value={editedProfile.dob} type="date" onChange={(e) =>
+            setEditedProfile({ ...editedProfile, dob: e.target.value })}/>
               </div>
 
 <div className="edit-field">  
@@ -137,9 +122,9 @@ export default function Profile() {
               Phone Number:
               </label>
               <input
-                value={profile.number}
+                value={editedProfile.number}
                 onChange={(e) =>
-                  setProfile({ ...profile, number: e.target.value })
+                  setEditedProfile({ ...editedProfile, number: e.target.value })
                 }
               />
            
@@ -150,9 +135,9 @@ export default function Profile() {
               Major:
               </label>
               <input
-                value={profile.major}
+                value={editedProfile.major}
                 onChange={(e) =>
-                  setProfile({ ...profile, major: e.target.value})
+                  setEditedProfile({ ...editedProfile, major: e.target.value})
                 }
               />
            
@@ -163,25 +148,13 @@ export default function Profile() {
             Role:
             </label>
           <select
-            onChange={(e) => setProfile({ ...profile, role: e.target.value })}>
+            onChange={(e) => setEditedProfile({ ...editedProfile, role: e.target.value })}>
             <option value="Mentee">Mentee</option>
             <option value="Mentor">Mentor</option>
 
           </select>
           </div>
-          <div className="edit-field">  
-            <label>
-              Co-ops:
-              </label>
-              <input
-                value={profile.major}
-                onChange={(e) =>
-                  setProfile({ ...profile, major: e.target.value})
-                }
-              />
-           
-           
-            </div> 
+        
           <button className="btn btn-primary" onClick={save}> Save</button> 
         </div>
         
@@ -201,7 +174,7 @@ export default function Profile() {
           <h5 className="card-title" style={{ textAlign: "left" }}>
             Profile Details
           </h5>
-          <button
+          {/* <button
                 className="btn btn-secondary"
                 style={{ marginLeft: "5px", justifyContent: "end" }}
                 onClick={(event) => {
@@ -209,8 +182,8 @@ export default function Profile() {
                   setProfile(profile);
                 }}
               >
-                Edit
-              </button>
+                Edit */}
+              {/* </button> */}
           <h3>{profile.firstName} {profile.lastName}</h3>
           <div className="field">
             <div className="d-flex align-items-center justify-content-between">
@@ -230,13 +203,14 @@ export default function Profile() {
           </div>
           <hr />
           <p className="bolded">Co-ops</p>
+
           <div className="list-group">
-            {profile?.coops?.map((coop: any) => (
+            {profile?.companies?.map((company: any) => (
               <div
-                key={coop._id}
+                key={company._id}
                 className="list-group-item d-flex align-items-center justify-content-between"
               >
-                <p className="card-text">{coop.name}</p>
+                <p className="card-text">{company.companyName}</p>
                 <div>
                   <button
                     className="btn btn-secondary"
@@ -265,12 +239,12 @@ export default function Profile() {
           <p className="bolded">Following</p>
 
           <div className="list-group">
-            {profile?.following?.map((following: any) => (
+            {profile?.following?.map((follower: any) => (
               <div
-                key={following._id}
+                key={follower._id}
                 className="list-group-item d-flex align-items-center justify-content-between"
               >
-                <p className="card-text"> User {following._id}</p>
+                <p className="card-text"> User {follower.id}</p>
                 <div>
                   <button
                     className="btn btn-danger"
