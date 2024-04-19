@@ -1,20 +1,9 @@
-import React from "react";
-import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
-import logo from "./logo.svg";
 import "./App.css";
-import Login from "./ConnectNEU/Account/Login";
-import Home from "./ConnectNEU/Home";
-import Navigation from "./ConnectNEU/Navigation";
-import Account from "./ConnectNEU/Account";
-<<<<<<< HEAD
-import Search from "./ConnectNEU/Search";
-=======
 import CurrentUser from "./ConnectNEU/Users/CurrentUser";
 import { Provider } from "react-redux";
 import store from "./ConnectNEU/store";
-import Profile from "./ConnectNEU/Account/Profile";
 import ConnectNEU from "./ConnectNEU";
->>>>>>> 3d3ed4738bdf005d42106accb99634dc53ea124a
+
 
 function App() {
 	return (
