@@ -24,11 +24,11 @@ export default function Navigation() {
 								Home
 							</Link>
 						</li>
-						<li className="nav-item">
+						{/* <li className="nav-item">
 							<Link to={"/Profile"} className="nav-link">
 								Profile
 							</Link>
-						</li>
+						</li> */}
 						<li className="nav-item">
 							<Link to={"/Account"} className="nav-link">
 								Account
