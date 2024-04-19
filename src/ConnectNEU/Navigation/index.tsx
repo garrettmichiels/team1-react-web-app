@@ -1,6 +1,14 @@
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import * as Search from "../Search/index";
+import { useState } from "react";
 export default function Navigation() {
+	const [search, setSearch] = useState("");
+	const navigate = useNavigate();
+	const navigateToSearch = () => {
+		if (search) {
+			navigate(`/ConnectNEU/Search/${search}`);
+		}
+	};
 	return (
 		<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div className="container-fluid">
@@ -42,8 +50,9 @@ export default function Navigation() {
 							type="search"
 							placeholder="Search"
 							aria-label="Search"
+							onChange={(e) => setSearch(e.target.value)}
 						/>
-						<button className="btn btn-outline-success" type="submit">
+						<button className="btn btn-outline-success" type="submit" onClick={navigateToSearch}>
 							Search
 						</button>
 					</form>

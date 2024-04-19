@@ -7,11 +7,23 @@ function Home() {
 	const isMentor = false;
 	const isMentee = true;
 	if (loggedIn && isMentor) {
-		return <MentorHome />;
+		return (
+			<div className="container py-2">
+				<MentorHome />
+			</div>
+		);
 	} else if (loggedIn && isMentee) {
-		return <MenteeHome />;
+		return (
+			<div className="container py-2">
+				<MenteeHome />
+			</div>
+		);
 	} else {
-		return <AnonymousHome />;
+		return (
+			<div className="container py-2">
+				<AnonymousHome />
+			</div>
+		);
 	}
 }
 export default Home;
