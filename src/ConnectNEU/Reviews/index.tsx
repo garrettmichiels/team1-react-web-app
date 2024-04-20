@@ -16,7 +16,7 @@ export default function Review({
 				<span className="d-flex mb-2 mx-2 p-2">
 					{[...Array(5)].map((_item, index) => {
 						return (
-							<div className="stars">
+							<div key={index} className="stars">
 								<FaStar
 									color={
 										index <= review.rating

@@ -74,8 +74,8 @@ function MentorHome() {
 			</div>
 			<div className="my-3">
 				<h2>Reviews Where You've Worked</h2>
-				{reviews.map((r) => {
-					return <Review review={r} blur={false} />;
+				{reviews.map((r, index) => {
+					return <Review key={index} review={r} blur={false} />;
 				})}
 			</div>
 		</div>

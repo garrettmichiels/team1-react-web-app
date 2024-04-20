@@ -39,8 +39,8 @@ function AnonymousHome() {
 	return (
 		<div className="p-3">
 			<h2>Sign In To View Recent Reviews</h2>
-			{sampleReviews.map((review) => {
-				return <Review review={review} blur={true} />;
+			{sampleReviews.map((r, index) => {
+				return <Review key={index} review={r} blur={true} />;
 			})}
 		</div>
 	);
