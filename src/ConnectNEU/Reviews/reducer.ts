@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    reviews: [] as any[],
-    review: {},
-}
-
 const reviewsSlice = createSlice({
   name: "reviews",
-  initialState,
+  initialState: {
+    reviews: [] as any[],
+    review: {},
+},
   reducers: {
     setReviews: (state, action) => {
       state.reviews = action.payload;

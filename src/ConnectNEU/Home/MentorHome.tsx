@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
 import Review from "../Reviews";
+import { useSelector } from "react-redux";
 
 function MentorHome() {
-	const [reviews, setReviews] = useState<any[]>([]);
-	const [review, setReview] = useState({
-		company: "Question",
-		rating: 5,
-		text: "Review text",
+	const review = useSelector((state: any) => state.reviews.reviews);
+	const reviews = useSelector((state: any) => state.reviews.reviews);
+	const { currentUser } = useSelector((state: any) => state.user);
+
+	const fetchCompanyReviews = async () => {
+		console.log(currentUser);
+		if (currentUser) {
+			console.log(currentUser.companies);
+			let allReviews = [] as any[];
+			for (const company of currentUser.companies) {
+				allReviews = [...allReviews, ...company.reviews];
+			}
+		}
+	};
+	useEffect(() => {
+		fetchCompanyReviews();
 	});
+
 	return (
 		<div className="p-3">
 			<div className="card shadow-sm">
@@ -22,7 +35,7 @@ function MentorHome() {
 							type="text"
 							placeholder="Company Name"
 							onChange={(e) => {
-								setReview({ ...review, company: e.target.value });
+								//({ ...review, company: e.target.value });
 							}}
 						/>
 						<span className="rating mb-2 mx-2">
@@ -35,7 +48,7 @@ function MentorHome() {
 											type="radio"
 											value={givenRating}
 											onClick={() => {
-												setReview({ ...review, rating: givenRating });
+												//({ ...review, rating: givenRating });
 											}}
 										/>
 										<div className="stars">
@@ -56,7 +69,7 @@ function MentorHome() {
 							type="button"
 							className="submit-button mb-2"
 							onClick={() => {
-								setReviews([...reviews, review]);
+								//[...reviews, review];
 							}}>
 							Submit Review
 						</button>
@@ -66,7 +79,7 @@ function MentorHome() {
 							className="flex-grow-1 form-control"
 							placeholder="Write a review here"
 							onChange={(e) => {
-								setReview({ ...review, text: e.target.value });
+								//({ ...review, text: e.target.value });
 							}}
 						/>
 					</div>
@@ -74,7 +87,7 @@ function MentorHome() {
 			</div>
 			<div className="my-3">
 				<h2>Reviews Where You've Worked</h2>
-				{reviews.map((r, index) => {
+				{reviews.map((r: any, index: any) => {
 					return <Review key={index} review={r} blur={false} />;
 				})}
 			</div>
