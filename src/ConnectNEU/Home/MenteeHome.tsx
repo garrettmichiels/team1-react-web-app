@@ -36,8 +36,8 @@ function MenteeHome() {
 	return (
 		<>
 			<h2>Reviews From Your Mentors</h2>
-			{reviews.map((r) => {
-				return <Review review={r} blur={false} />;
+			{reviews.map((r, index) => {
+				return <Review key={index} review={r} blur={false} />;
 			})}
 		</>
 	);
