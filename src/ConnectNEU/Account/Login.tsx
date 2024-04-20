@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as userClient from "../Users/Client";
 export default function Login() {
+    const [signIn, setSignIn] = useState({ _id: "",
+    username: "", 
+    password: ""});
+
   const [user, setUser] = useState({ _id: "",
   username: "", 
   password: "", 
@@ -11,13 +15,24 @@ export default function Login() {
   role: "MENTEE",
   major: "",
   following: [],
-  coops: [],});
+  coops: []});
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const register = async () => {
+    try {
+      const newUser = await userClient.registerUser(user);
+      navigate("/Account/Profile");
+    } catch (error : any) {
+      console.error(error);
+      setError(error.message);
+    }
+  };
+
   const login = async () => {
     try {
-      const newUser = await userClient.loginUser(user);
+      const newUser = await userClient.loginUser(signIn);
       navigate("/Account/Profile");
     } catch (error : any) {
       console.error(error);
@@ -28,21 +43,21 @@ export default function Login() {
   return (
     <div className="container">
         <div className="row align-items-center">
-          
+        {error && <div className="alert alert-danger m-2">{error}</div>}
             <div className="col align-items-center">
             <div className="align-items-center">
                 <h1>Login</h1>
-                {error && <div className="alert alert-danger">{error}</div>}
+                
                 <input
-                    onChange={(e) => setUser({ ...user, username: e.target.value })}
-                    value={user.username}
+                    onChange={(e) => setSignIn({ ...signIn, username: e.target.value })}
+                    value={signIn.username}
                     type="text"
                     className="form-control"
                     placeholder="Username"
                 />
                 <input
-                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                    value={user.password}
+                    onChange={(e) => setSignIn({ ...signIn, password: e.target.value })}
+                    value={signIn.password}
                     type="password"
                     className="form-control mt-2"
                     placeholder="Password"
@@ -55,7 +70,6 @@ export default function Login() {
         </div>
             <div className="col">
             <h2 className="mt-4">Don't have an account? Register Here</h2>
-            {error && <div className="alert alert-danger">{error}</div>}
             <h4 className="mt-4" style={{textAlign: "left"}}>Enter Your Email</h4>
             <input
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -97,7 +111,7 @@ export default function Login() {
                 placeholder="Password"
             />
             <br></br>
-            <button onClick={login} className="btn btn-primary">
+            <button onClick={register} className="btn btn-primary">
                 Register
             </button>
             </div>
