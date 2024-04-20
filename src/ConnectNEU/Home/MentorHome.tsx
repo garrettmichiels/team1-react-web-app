@@ -3,26 +3,26 @@ import { FaStar } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
 import Review from "../Reviews";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as client from "../Reviews/client";
+import { setReviews } from "../Reviews/reducer";
 
 function MentorHome() {
-	const review = useSelector((state: any) => state.reviews.reviews);
+	const dispatch = useDispatch();
+	const review = useSelector((state: any) => state.reviews.review);
 	const reviews = useSelector((state: any) => state.reviews.reviews);
 	const { currentUser } = useSelector((state: any) => state.user);
 
 	const fetchCompanyReviews = async () => {
-		console.log(currentUser);
-		if (currentUser) {
-			console.log(currentUser.companies);
-			let allReviews = [] as any[];
-			for (const company of currentUser.companies) {
-				allReviews = [...allReviews, ...company.reviews];
-			}
+		for (const company of currentUser.companies) {
+			const revs = await client.fetchCompanyReviews(company._id);
+			dispatch(setReviews([...reviews, ...revs]));
 		}
 	};
 	useEffect(() => {
+		dispatch(setReviews([]));
 		fetchCompanyReviews();
-	});
+	}, []);
 
 	return (
 		<div className="p-3">
