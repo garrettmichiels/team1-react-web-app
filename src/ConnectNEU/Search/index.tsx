@@ -30,7 +30,7 @@ export default function Search() {
 	}, [query]);
 	return(
 		<>
-		<h1>Search Results</h1>
+		<h1 className="m-2">Search Results</h1>
 		{!results && <p>No Results</p>}
 	 {results && results.map((result: any) => (
 			<>
@@ -38,20 +38,24 @@ export default function Search() {
 			<span className="d-flex">
 				<h5 className="card-title mx-2 pt-2">{result.company.name}</h5>
 				<span className="d-flex mb-2 mx-2 p-2">
-					{result.locations[0] && JSON.stringify(result.locations[0].name)}
-					{result.categories[0] && JSON.stringify(result.categories[0].name)}
-					{result.levels[0] && JSON.stringify(result.levels[0].name)}
-					<button className="btn btn-primary mx-2">
+	
+
+				</span>
+			</span>
+			<div className="card-body">
+				<div>{result.locations[0] && "Location: " + result.locations[0].name}</div>
+				<div>{result.categories[0] && "Category: " + result.categories[0].name}</div>
+				<div>{result.levels[0] && "Level: " + result.levels[0].name}</div>
+				<div className="float-end">
+					
+				<button className="btn btn-primary mx-2">
 						<a href={result.refs.landing_page}></a>
 						Apply
 					</button>
 					<button className="btn btn-primary mx-2" onClick={() => navigate(`/Details/${result.company.id}`)}>
 						Details
 					</button>
-				</span>
-			</span>
-			<div className="card-body">
-				{/* <p>{result}</p> */}
+					</div>
 				</div>
 		</div>
 			</>

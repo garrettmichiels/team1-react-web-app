@@ -15,6 +15,7 @@ export interface User { _id: string; username: string; password: string;
   
       
 export const registerUser = async (user: any) => {
+  console.log("registering person ", user)
   const response = await axiosWithCredentials.post(
     "http://localhost:4000/api/users/register",
     user
