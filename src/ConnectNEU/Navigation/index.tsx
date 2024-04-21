@@ -6,7 +6,8 @@ export default function Navigation() {
 	const navigate = useNavigate();
 	const navigateToSearch = () => {
 		if (search) {
-			navigate(`/Search/${search}`);
+			const searchCamelCase = search.substring(0, 1).toUpperCase() + search.substring(1);
+			navigate(`/Search/${searchCamelCase}`);
 		}
 	};
 	return (
