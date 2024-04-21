@@ -11,6 +11,7 @@ import { HashRouter } from "react-router-dom";
 import Navigation from "./Navigation";
 import Account from "./Account";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function ConnectNEU() {
 	return (

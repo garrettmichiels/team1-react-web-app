@@ -16,7 +16,7 @@ export default function Review({
 			<span className="fp-card-header d-flex">
 				<Link className="fp-company-link" to={`/Details/${review.company.id}`}>
 					<h5 className="fp-company-link card-title mx-2 pt-2">
-						{review.company.companyName}
+						{review.company.companyName} - {review.title}
 					</h5>
 				</Link>
 				<span className="d-flex mb-2 mx-2 p-2">
