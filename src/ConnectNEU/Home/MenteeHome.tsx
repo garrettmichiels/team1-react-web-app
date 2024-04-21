@@ -1,41 +1,38 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Review from "../Reviews";
+import * as client from "../Reviews/client";
 
 function MenteeHome() {
-	const reviews = [
-		{
-			company: "Company Name 1",
-			user: "User 1",
-			rating: 2,
-			text: "This is some sample text, a sample review for a sample company.",
-		},
-		{
-			company: "Company Name 2",
-			user: "User 2",
-			rating: 5,
-			text: "Review text 2",
-		},
-		{
-			company: "Company Name 3",
-			user: "User 3",
-			rating: 3,
-			text: "Review text 3",
-		},
-		{
-			company: "Company Name 4",
-			user: "User 4",
-			rating: 1,
-			text: "Review text 4",
-		},
-		{
-			company: "Company Name 5",
-			user: "User 5",
-			rating: 0,
-			text: "Review text 5",
-		},
-	];
+	const { currentUser } = useSelector((state: any) => state.user);
+	const [reviews, setReviews] = useState<any[]>([]);
+
+	useEffect(() => {
+		const fetchFollowingReviews = async () => {
+			let newReviews = [] as any[];
+			console.log("user is following", currentUser.following);
+			for await (const user of currentUser.following) {
+				const revs = await client.fetchUserReviews(user);
+				console.log("user reviews", revs);
+				for (const r of revs) {
+					newReviews = [...newReviews, await client.findReviewById(r)];
+				}
+			}
+			for await (const company of currentUser.companies) {
+				const revs = await client.fetchCompanyReviews(company._id);
+				console.log("company reviews", revs);
+				for (const r of revs) {
+					newReviews = [...newReviews, await client.findReviewById(r)];
+				}
+			}
+			setReviews([...reviews, ...newReviews]);
+		};
+		fetchFollowingReviews();
+	}, []);
+
 	return (
 		<>
-			<h2>Reviews From Your Mentors</h2>
+			<h2>Reviews From Your Mentors & Followed Companies</h2>
 			{reviews.map((r, index) => {
 				return <Review key={index} review={r} blur={false} />;
 			})}
