@@ -36,7 +36,7 @@ export default function Search() {
 			<>
 		<div className="card m-3">
 			<span className="d-flex">
-				<h5 className="card-title mx-2 pt-2">{result.company.name}</h5>
+				<h5 className="card-title mx-2 pt-2">{result.company.name + " - " + result.name}</h5>
 				<span className="d-flex mb-2 mx-2 p-2">
 	
 

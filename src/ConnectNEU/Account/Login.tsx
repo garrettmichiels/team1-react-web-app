@@ -5,7 +5,6 @@ import { setCurrentUser } from "../Users/reducer";
 import { useDispatch } from "react-redux";
 export default function Login() {
 	const [user, setUser] = useState({
-		_id: "",
 		username: "",
 		password: "",
 		email: "",
@@ -30,6 +29,16 @@ export default function Login() {
 		}
 	};
 
+    const register = async () => {
+		try {
+			const newUser = await userClient.registerUser(user);
+			dispatch(setCurrentUser(newUser));
+			navigate("/Account/Profile");
+		} catch (error: any) {
+			console.error(error);
+			setError(error.message);
+		}
+	};
 	return (
 		<div className="container">
 			<div className="row align-items-center">
@@ -104,7 +113,7 @@ export default function Login() {
 						placeholder="Password"
 					/>
 					<br></br>
-					<button onClick={login} className="btn btn-primary">
+					<button onClick={register} className="btn btn-primary">
 						Register
 					</button>
 				</div>
