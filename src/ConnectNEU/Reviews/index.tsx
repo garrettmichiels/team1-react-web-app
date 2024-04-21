@@ -1,6 +1,7 @@
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./index.css";
+import { useEffect, useState } from "react";
 
 export default function Review({
 	review,
@@ -9,10 +10,15 @@ export default function Review({
 	review: any;
 	blur: boolean;
 }) {
+	console.log("posting review", review);
 	return (
 		<div className="card shadow-sm m-3">
 			<span className="fp-card-header d-flex">
-				<h5 className="card-title mx-2 pt-2">{review.company.companyName}</h5>
+				<Link className="fp-company-link" to={`/Details/${review.company.id}`}>
+					<h5 className="fp-company-link card-title mx-2 pt-2">
+						{review.company.companyName}
+					</h5>
+				</Link>
 				<span className="d-flex mb-2 mx-2 p-2">
 					{[...Array(5)].map((_item, index) => {
 						return (
@@ -30,11 +36,11 @@ export default function Review({
 				</span>
 			</span>
 			<div className={blur ? "blurred card-body" : "card-body"}>
-				<Link className="fp-user-link" to={""}>
+				<Link className="fp-user-link" to={`/Profile/${review.user.id}`}>
 					{review.user.firstName} {review.user.lastName}
 				</Link>
 				<hr />
-				<p>{review.text}</p>
+				<p>{review.description}</p>
 			</div>
 		</div>
 	);

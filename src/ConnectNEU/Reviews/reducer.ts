@@ -9,6 +9,7 @@ const reviewsSlice = createSlice({
   reducers: {
     setReviews: (state, action) => {
       state.reviews = action.payload;
+      console.log("state reviews is now", state.reviews)
     },
     addReview: (state, action) => {
       state.reviews = [action.payload, ...state.reviews,];

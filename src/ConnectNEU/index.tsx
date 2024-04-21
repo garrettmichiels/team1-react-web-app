@@ -10,11 +10,12 @@ import CurrentUser from "./Users/CurrentUser";
 import { HashRouter } from "react-router-dom";
 import Navigation from "./Navigation";
 import Account from "./Account";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export default function ConnectNEU() {
 	return (
-	<HashRouter>
-		<Navigation />
+		<HashRouter>
+			<Navigation />
 			<Routes>
 				<Route path="/" element={<Navigate to="Home" />}></Route>
 				<Route path="Home" element={<Home />}></Route>
@@ -23,7 +24,6 @@ export default function ConnectNEU() {
 				<Route path="Profile/:id/*" element={<Profile />}></Route>
 				<Route path="Details/:did" element={<Listing />}></Route>
 			</Routes>
-			</HashRouter>
-
-);
+		</HashRouter>
+	);
 }

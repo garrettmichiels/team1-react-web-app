@@ -1,26 +1,35 @@
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./index.css";
-import { Link } from "react-router-dom";
 import Review from "../Reviews";
 import { useDispatch, useSelector } from "react-redux";
 import * as client from "../Reviews/client";
-import { setReviews } from "../Reviews/reducer";
+import { setReview } from "../Reviews/reducer";
 
 function MentorHome() {
 	const dispatch = useDispatch();
-	const review = useSelector((state: any) => state.reviews.review);
-	const reviews = useSelector((state: any) => state.reviews.reviews);
+	//const review = useSelector((state: any) => state.reviews.review);
+	//const reviews = useSelector((state: any) => state.reviews.reviews);
 	const { currentUser } = useSelector((state: any) => state.user);
+	const [reviews, setReviews] = useState<any[]>([]);
+	const [review, setReview] = useState<any>({ user: currentUser });
 
-	const fetchCompanyReviews = async () => {
-		for (const company of currentUser.companies) {
-			const revs = await client.fetchCompanyReviews(company._id);
-			dispatch(setReviews([...reviews, ...revs]));
-		}
+	const addNewReview = async () => {
+		await client.createReview(review.user._id, review.company._id, review);
+		setReviews([...reviews, review]);
 	};
+
 	useEffect(() => {
-		dispatch(setReviews([]));
+		const fetchCompanyReviews = async () => {
+			for await (const company of currentUser.companies) {
+				const revs = await client.fetchCompanyReviews(company._id);
+				let newReviews = [] as any[];
+				for (const r of revs) {
+					newReviews = [...newReviews, await client.findReviewById(r)];
+				}
+				setReviews([...reviews, ...newReviews]);
+			}
+		};
 		fetchCompanyReviews();
 	}, []);
 
@@ -30,32 +39,54 @@ function MentorHome() {
 				<div className="card-body">
 					<h5 className="card-title">Submit a Company Review</h5>
 					<span className="d-flex">
-						<input
-							className="flex-grow-1 mb-2 form-control"
-							type="text"
-							placeholder="Company Name"
-							onChange={(e) => {
-								//({ ...review, company: e.target.value });
-							}}
-						/>
+						<span className="dropdown">
+							<input
+								className="flex-grow-1 mb-2 form-control"
+								type="text"
+								placeholder="Title"
+								onChange={(e) => {
+									setReview({ ...review, title: e.target.value });
+								}}
+							/>
+							<button
+								id="companies-dropdown"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"></button>
+							<ul
+								className="dropdown-menu"
+								aria-labelledby="companies-dropdown">
+								{currentUser.companies.map((company: any, index: any) => {
+									return (
+										<li key={index} className="dropdown-item">
+											<label
+												onClick={() =>
+													setReview({ ...review, company: company })
+												}>
+												{company.companyName}
+											</label>
+										</li>
+									);
+								})}
+							</ul>
+						</span>
 						<span className="rating mb-2 mx-2">
 							{[...Array(5)].map((item, index) => {
 								const givenRating = index;
 								return (
-									<label>
+									<label key={index}>
 										<input
 											style={{ display: "none" }}
 											type="radio"
 											value={givenRating}
 											onClick={() => {
-												//({ ...review, rating: givenRating });
+												setReview({ ...review, stars: givenRating + 1 });
 											}}
 										/>
 										<div className="stars">
 											<FaStar
 												color={
-													givenRating < review.rating ||
-													givenRating === review.rating
+													givenRating < review.stars
 														? "rgb(230, 230, 0)"
 														: "rgb(192,192,192)"
 												}
@@ -69,7 +100,7 @@ function MentorHome() {
 							type="button"
 							className="submit-button mb-2"
 							onClick={() => {
-								//[...reviews, review];
+								addNewReview();
 							}}>
 							Submit Review
 						</button>
@@ -79,7 +110,7 @@ function MentorHome() {
 							className="flex-grow-1 form-control"
 							placeholder="Write a review here"
 							onChange={(e) => {
-								//({ ...review, text: e.target.value });
+								setReview({ ...review, description: e.target.value });
 							}}
 						/>
 					</div>
@@ -87,9 +118,10 @@ function MentorHome() {
 			</div>
 			<div className="my-3">
 				<h2>Reviews Where You've Worked</h2>
-				{reviews.map((r: any, index: any) => {
-					return <Review key={index} review={r} blur={false} />;
-				})}
+				{reviews &&
+					reviews.map((r: any, index: any) => {
+						return <Review key={r._id} review={r} blur={false} />;
+					})}
 			</div>
 		</div>
 	);

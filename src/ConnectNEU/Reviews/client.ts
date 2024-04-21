@@ -27,6 +27,7 @@ export const fetchUserReviews = async (userId: String) => {
 };
 
 export const createReview = async (userId: String, companyId: String, review: any) => {
+	const newReview = {...review, date: new Date().getDate}
 	const response = await axios.post(
 		`http://localhost:4000/api/reviews/${userId}/${companyId}`,
 		review
@@ -48,3 +49,10 @@ export const deleteReview = async (reviewId: string) => {
 	);
 	return response.data;
 };
+
+export const findReviewById = async (reviewId: string) => {
+	const response = await axios.get(
+		`http://localhost:4000/api/reviews/${reviewId}`
+	);
+	return response.data;
+}
