@@ -50,6 +50,13 @@ export default function Profile() {
     following: [],
     companies: []});
 
+
+    const logout = async () => {
+      await client.logout();
+      dispatch(setCurrentUser(null));
+      navigate("/Account/Login");
+    };
+
   const deleteFollower = async (follower: any) => {
     console.log(follower);
 
@@ -366,6 +373,16 @@ export default function Profile() {
             ))}
           </div>
           
+          {currentUser && currentUser.id === profile.id && (
+ <div>
+                  <button
+                    className="btn btn-danger"
+                    style={{ marginLeft: "5px" }}
+                    onClick={logout}
+                  >
+                    Logout
+                  </button>
+                  </div>)}
         </div>
       </div>
     </div>
