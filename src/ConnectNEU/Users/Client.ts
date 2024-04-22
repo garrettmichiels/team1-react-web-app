@@ -40,6 +40,12 @@ export const loginUser = async (user: any) => {
 //   return response.data;
 // };
 
+export const addCompany = async (userId: any, companyId: any) => {
+  const response = await axiosWithCredentials.put(
+    `${USERS_API}/${userId}/companies/${companyId}`);
+  return response.data;
+}
+
 export const deleteCompany = async (userId: any, companyId: any) => {
   const response = await axiosWithCredentials.delete(
     `${USERS_API}/${userId}/companies/${companyId}`);

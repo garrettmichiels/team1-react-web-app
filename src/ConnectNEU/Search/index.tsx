@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import * as client from "../TheMuse/client";
+import * as museClient from "../TheMuse/client";
+import * as userClient from "../Users/Client";
 import { Link } from "react-router-dom";
 
 interface Jobs {
@@ -12,6 +13,8 @@ interface Jobs {
 	company: { id: number; name: string };
 }
 
+
+
 export default function Search() {
 	const { query } = useParams<{ query: string }>();
 	const [results, setResults] = useState<any[]>();
@@ -19,11 +22,19 @@ export default function Search() {
 	const getJobsFromCompany = async () => {
 		if (query) {
 			console.log(query);
-			const resultsFromQuery = await client.getJobsFromCompany(query);
+			const resultsFromQuery = await museClient.getJobsFromCompany(query);
 			setResults(resultsFromQuery.results);
 			console.log(resultsFromQuery);
 		}
 	};
+
+	const addCompany = async (userId: any, companyId: any) => {
+		try {
+			await userClient.addCompany(userId, companyId);
+		} catch
+			(err) {
+			console.log(err);
+		}
 
 	useEffect(() => {
 		getJobsFromCompany();
