@@ -1,14 +1,16 @@
 import axios from "axios";
+import { Review } from "../Reviews/client";
 
 const axiosWithCredentials = axios.create({
   withCredentials: true,
 });
 const USERS_API = "http://localhost:4000/api/users";
 
-export interface User { _id: string; username: string; password: string;
-  firstName: string, lastName: string, role: string; major: string,
-  following: [String],
-  coops: [String],};
+export interface User { id: string, username: string; password: string;
+  firstName: string, lastName: string, number: string, email: string, dob:string, role: string; major: string,
+  reviews: Review[],
+  following: User[],
+  companies: Company[]};
   
   export interface Company { _id: string;
     companyName: string, companyId: string, id:String};
@@ -38,15 +40,18 @@ export const loginUser = async (user: any) => {
 //   return response.data;
 // };
 
-export const deleteCompany = async (company: any) => {
+export const deleteCompany = async (userId: any, companyId: any) => {
   const response = await axiosWithCredentials.delete(
-    `${USERS_API}/${company._id}`);
+    `${USERS_API}/${userId}/companies/${companyId}`);
   return response.data;
 };
 
-export const deleteFollower = async (user: any, follower: any) => {
+export const deleteFollower = async (userId: any, followerId: any) => {
+  console.log( `${USERS_API}/${userId}/followers/${followerId}`);
+  console.log( userId, followerId);
+
   const response = await axiosWithCredentials.delete(
-    `${USERS_API}/${user._id}/followers/${follower._id}`);
+    `${USERS_API}/${userId}/followers/${followerId}`);
   return response.data;
 };
 
