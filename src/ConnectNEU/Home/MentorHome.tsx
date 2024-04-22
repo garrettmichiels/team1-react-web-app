@@ -47,10 +47,14 @@ function MentorHome() {
 			for await (const company of currentUser.companies) {
 				const revs = await client.fetchCompanyReviews(company._id);
 				for (const r of revs) {
-					newReviews = [await client.findReviewById(r), ...newReviews];
+					const newRev = await client.findReviewById(r);
+					if (newRev !== null) {
+						newReviews = [newRev, ...newReviews];
+					}
 				}
 			}
 			setReviews(newReviews);
+			console.log(newReviews);
 		};
 		fetchCompanyReviews();
 	}, []);
@@ -135,6 +139,7 @@ function MentorHome() {
 				<h2>Reviews Where You've Worked</h2>
 				{reviews &&
 					reviews.map((r: any, index: any) => {
+						console.log("review is", r);
 						return <Review key={r._id} review={r} blur={false} />;
 					})}
 			</div>
