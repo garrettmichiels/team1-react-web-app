@@ -40,7 +40,7 @@ function MenteeHome() {
 		<>
 			<h2>Reviews From Your Mentors & Followed Companies</h2>
 			{reviews.map((r, index) => {
-				return <Review key={index} review={r} blur={false} />;
+				return <Review key={index} review={r} />;
 			})}
 		</>
 	);

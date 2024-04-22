@@ -140,7 +140,7 @@ function MentorHome() {
 				{reviews &&
 					reviews.map((r: any, index: any) => {
 						console.log("review is", r);
-						return <Review key={r._id} review={r} blur={false} />;
+						return <Review key={r._id} review={r} />;
 					})}
 			</div>
 		</div>

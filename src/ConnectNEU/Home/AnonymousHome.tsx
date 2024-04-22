@@ -22,7 +22,7 @@ function AnonymousHome() {
 			<h2>Sign In To View Recent Reviews</h2>
 			{Array.isArray(reviews) &&
 				reviews.map((r: any, index: any) => {
-					return <Review key={index} review={r} blur={true} />;
+					return <Review key={index} review={r} />;
 				})}
 		</div>
 	);

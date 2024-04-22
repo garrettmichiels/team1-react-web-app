@@ -3,13 +3,7 @@ import { Link } from "react-router-dom";
 import "./index.css";
 import { useEffect, useState } from "react";
 
-export default function Review({
-	review,
-	blur,
-}: {
-	review: any;
-	blur: boolean;
-}) {
+export default function Review({ review }: { review: any }) {
 	return (
 		<div key={review._id} className="card shadow-sm m-3">
 			<span className="fp-card-header d-flex">
@@ -36,7 +30,7 @@ export default function Review({
 					})}
 				</span>
 			</span>
-			<div className={blur ? "blurred card-body" : "card-body"}>
+			<div className={"card-body"}>
 				<Link className="fp-user-link" to={`/Profile/${review.user.id}`}>
 					{review.user.firstName} {review.user.lastName}
 				</Link>
