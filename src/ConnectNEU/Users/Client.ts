@@ -100,3 +100,12 @@ export const addFollower = async (userId: any, followerId: any) => {
     `${USERS_API}/${userId}/followers/${followerId}`);
   return response.data;
 };
+
+export const addJobToUser = async (userId: any, jobId: any) => {
+  console.log( `${USERS_API}/${userId}/jobs/${jobId}`);
+  console.log( userId, jobId);
+
+  const response = await axiosWithCredentials.put(
+    `${USERS_API}/${userId}/jobs/${jobId}`);
+  return response.data;
+}
