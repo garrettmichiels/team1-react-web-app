@@ -12,6 +12,9 @@ function Home() {
 	if (currentUser === null) {
 		return (
 			<div className="container py-2">
+				<h2>
+					Welcome to ConnectNEU, Connect With Your Northeastern Community!
+				</h2>
 				<AnonymousHome />
 			</div>
 		);
@@ -19,12 +22,20 @@ function Home() {
 	if (currentUser.role === "MENTEE") {
 		return (
 			<div className="container py-2">
+				<h2>
+					Welcome to ConnectNEU, {currentUser.firstName}, Connect With Your
+					Northeastern Community!
+				</h2>
 				<MenteeHome />
 			</div>
 		);
 	} else if (currentUser.role === "MENTOR") {
 		return (
 			<div className="container py-2">
+				<h2>
+					Welcome to ConnectNEU, {currentUser.firstName}, Connect With Your
+					Northeastern Community!
+				</h2>
 				<MentorHome />
 			</div>
 		);
