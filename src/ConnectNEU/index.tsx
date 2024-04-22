@@ -9,6 +9,7 @@ import Navigation from "./Navigation";
 import Account from "./Account";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Details from "./Search/Details";
 
 export default function ConnectNEU() {
 	return (
@@ -20,7 +21,7 @@ export default function ConnectNEU() {
 				<Route path="Search/:query/*" element={<Search />}></Route>
 				<Route path="/Account/*" element={<Account />} />
 				<Route path="Profile/:id" element={<Profile />}></Route>
-				<Route path="Details/:did" element={<Listing />}></Route>
+				<Route path="Details/:did" element={<Details />}></Route>
 			</Routes>
 		</HashRouter>
 	);
