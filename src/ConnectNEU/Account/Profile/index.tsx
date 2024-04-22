@@ -82,6 +82,15 @@ export default function Profile() {
     }
   };
 
+  const addFollower = async (followerId: any) => {
+
+    try {
+      await client.addFollower(currentUser.id,followerId);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const fetchProfile = async () => {
     
@@ -239,7 +248,7 @@ export default function Profile() {
              <button
              className="btn btn-primary "
              style={{ marginLeft: "5px" }}
-            //  onClick={addFollower}
+             onClick={()=>addFollower(profile.id)}
            >
              Follow
            </button>
@@ -286,15 +295,16 @@ export default function Profile() {
               className="list-group-item d-flex align-items-center justify-content-between"
             >
               <p className="card-text">{review.title}</p>
-              <div>
-                <button
-                  className="btn btn-danger"
-                  style={{ marginLeft: "5px" }}
-                  onClick={deleteFollower}
-                >
-                  Unfollow
-                </button>
-              </div>
+              {currentUser && currentUser.id === profile.id && (
+                  <div>
+                  <button
+                    className="btn btn-danger"
+                    style={{ marginLeft: "5px" }}
+                    onClick={() => deleteFollower(review)}
+                  >
+                    Unfollow
+                  </button>
+                  </div>)}
             </div>
             
           ))}
@@ -340,21 +350,7 @@ export default function Profile() {
               >
                <Link to={`/Profile/${follower.id}`}>
                <p className="card-text"> {follower.firstName} {follower.lastName}</p>
-
                </Link>
-                {/* <Link to={`/Profile/${follower.id}`} >
-                  
-                <a href={`/Profile/${follower.id}`} className="btn btn-primary">
-            {" "}
-            Profile
-          </a> */}
-                  {/* <button
-                    className="btn btn-danger"
-                    style={{ marginLeft: "5px" }}
-                    // onClick={navigateToProfile(follower.id)}
-                  >
-                    Profile
-                  </button> */}
                   {currentUser && currentUser.id === profile.id && (
                   <div>
                   <button

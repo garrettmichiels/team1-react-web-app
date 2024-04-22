@@ -90,3 +90,12 @@ export const updateUser = async (user: any) => {
   );
   return response.data;
 };
+
+export const addFollower = async (userId: any, followerId: any) => {
+  console.log( `${USERS_API}/${userId}/followers/${followerId}`);
+  console.log( userId, followerId);
+
+  const response = await axiosWithCredentials.put(
+    `${USERS_API}/${userId}/followers/${followerId}`);
+  return response.data;
+};
