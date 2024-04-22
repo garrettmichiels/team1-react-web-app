@@ -13,7 +13,9 @@ export default function Review({
 	return (
 		<div key={review._id} className="card shadow-sm m-3">
 			<span className="fp-card-header d-flex">
-				<Link className="fp-company-link" to={`/Details/${review.company.id}`}>
+				<Link
+					className="fp-company-link"
+					to={`/Search/${review.company.companyName}`}>
 					<h5 className="fp-company-link card-title mx-2 pt-2">
 						{review.company.companyName} - {review.title}
 					</h5>
