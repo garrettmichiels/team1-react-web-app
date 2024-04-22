@@ -7,7 +7,6 @@ export default function Details() {
 	console.log("State", state);
 	const job = state.result;
 	const { currentUser } = useSelector((state: any) => state.user);
-
 	const saveJob = async (jobId: string) => {
 		try {
 			await client.addJobToUser(currentUser.id, jobId);
@@ -16,7 +15,7 @@ export default function Details() {
 		}
 	};
 
-	return (
+    return (
 		<div className="container">
 			<div style={{ fontSize: "40px" }}>
 				{job.company.name}
@@ -57,5 +56,7 @@ export default function Details() {
 				</div>
 			</div>
 		</div>
+
 	);
 }
+
