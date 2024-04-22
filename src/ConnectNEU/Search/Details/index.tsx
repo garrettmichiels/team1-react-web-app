@@ -18,7 +18,7 @@ export default function Details() {
     }
 
     return (
-        <>
+        <div className='container'>
             <div style={{fontSize: "40px"}}>{job.company.name}
             <button className="btn btn-success float-end m-2" onClick={() => saveJob(job.id)}>Save Job</button></div>
 
@@ -41,6 +41,7 @@ export default function Details() {
                 <div dangerouslySetInnerHTML={{__html: job.contents.replaceAll("<br>", "").replaceAll("<b>","<h2>").replaceAll("</b>","</h2>")}}></div>
 		</div>
         </div>
-        </>
+        
+        </div>
     );
 }

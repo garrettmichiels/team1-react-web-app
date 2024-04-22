@@ -31,30 +31,39 @@ export default function Search() {
 	}, [query]);
 	return(
 		<>
-		<h1 className="m-2">Search Results</h1>
-		{results && results.length === 0 && <div className="text-center"><h2>No Results</h2></div>}
-	 {results && results.map((result: any) => (
-			
-		<div className="card m-3" key={result.id}>
-			<span className="d-flex">
-				<h5 className="card-title mx-2 pt-2">{result.company.name + " - " + result.name}</h5>
-				<span className="d-flex mb-2 mx-2 p-2">
-	
+		{/* <h1 className="m-2">Search Results</h1> */}
+		{results && results.length === 0 && <div className="text-center mt-3"><h2>No Results For That Search</h2></div>}
 
-				</span>
+		{results && results.length > 0 && <>
+			<span className="float-end">
+				<button className="btn btn-success m-2">Add Company</button>
 			</span>
-			<div className="card-body">
-				<div>{result.locations[0] && "Location: " + result.locations[0].name}</div>
-				<div>{result.categories[0] && "Category: " + result.categories[0].name}</div>
-				<div>{result.levels[0] && "Level: " + result.levels[0].name}</div>
-				<div className="float-end">
-					<a className="btn btn-primary mx-2" href={result.refs.landing_page}>Apply</a>
-					<Link className="btn btn-primary mx-2" to={`/Details/${result.id}`} state={{result}}>Details</Link>
+			<h1 className="card-title mx-2 pt-2">Search Results</h1>
+			</>
+		}
+
+			{results && results.map((result: any) => (
+				
+			<div className="card m-3" key={result.id}>
+				<span className="d-flex">
+					<h5 className="card-title mx-2 pt-2">{result.company.name + " - " + result.name}</h5>
+					<span className="d-flex mb-2 mx-2 p-2">
+
+
+					</span>
+				</span>
+				<div className="card-body">
+					<div>{result.locations[0] && "Location: " + result.locations[0].name}</div>
+					<div>{result.categories[0] && "Category: " + result.categories[0].name}</div>
+					<div>{result.levels[0] && "Level: " + result.levels[0].name}</div>
+					<div className="float-end">
+						<a className="btn btn-primary mx-2" href={result.refs.landing_page}>Apply</a>
+						<Link className="btn btn-primary mx-2" to={`/Details/${result.id}`} state={{result}}>Details</Link>
+						</div>
 					</div>
-				</div>
-		</div>
-			
-		))} 
+			</div>
+				
+			))} 
 		</>
 	);
 }
