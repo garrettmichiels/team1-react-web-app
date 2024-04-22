@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { User, Company } from "../../Users/Client";
 import { getCompany } from "../../TheMuse/client";
 import { setCurrentUser } from "../../Users/reducer";
+import Review from "../../Reviews";
+import { Link } from "react-router-dom";
 export default function Profile() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -18,7 +20,7 @@ export default function Profile() {
   const { currentUser } = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
 
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<User>({
     id: "",
     username: "",
     password: "",
@@ -27,13 +29,13 @@ export default function Profile() {
     dob: "",
     number: "",
     email: "",
-    role: "USER",
+    role: "MENTEE",
     major: "",
-    following: [{ id: "", name: "", _id: "" }],
-    companies: [{ id: "", companyName: "", companyId: "", _id: "" }],
-  });
+    reviews: [],
+    following: [],
+    companies: []});
 
-  const [editedProfile, setEditedProfile] = useState({
+  const [editedProfile, setEditedProfile] = useState<User>({
     id: "",
     username: "",
     password: "",
@@ -42,35 +44,44 @@ export default function Profile() {
     dob: "",
     number: "",
     email: "",
-    role: "USER",
+    role: "MENTEE",
     major: "",
-    following: [{ id: "", name: "", _id: "" }],
-    companies: [{ id: "", companyName: "", companyId: "", _id: "" }],
-  });
+    reviews: [],
+    following: [],
+    companies: []});
 
   const deleteFollower = async (follower: any) => {
+    console.log(follower);
+
     try {
-      await client.deleteFollower(profile.id, follower);
+      console.log(currentUser.id);
+
+      await client.deleteFollower(currentUser.id,follower.id);
       setProfile({
         ...profile,
-        following: profile.following.filter((f) => f._id !== follower._id),
+        following: profile.following.filter((f) => f.id !== follower.id),
       });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const deleteCompany = async (company: Company) => {
+  const deleteCompany = async (company: any) => {
+    console.log(company);
+
     try {
-      await client.deleteCompany(company);
+      console.log(currentUser.id);
+
+      await client.deleteFollower(currentUser.id,company.id);
       setProfile({
         ...profile,
-        companies: profile.companies.filter((u) => u._id !== company._id),
+        following: profile.following.filter((f) => f.id !== company.id),
       });
     } catch (err) {
       console.log(err);
     }
   };
+
 
   const fetchProfile = async () => {
     
@@ -101,6 +112,11 @@ export default function Profile() {
   }
   };
 
+
+  const navigateToProfile = async() =>{
+    navigate("/Account/Login");
+  }
+
   const save = async () => {
     // const d = {...profile}
     await client.updateUser(editedProfile);
@@ -109,9 +125,11 @@ export default function Profile() {
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [id]);
 
   console.log(profile, "printed profile");
+  console.log(profile.role, "role");
+
 
   if (!profile) {
     return <div>Loading...</div>;
@@ -194,8 +212,8 @@ export default function Profile() {
                   setEditedProfile({ ...editedProfile, role: e.target.value })
                 }
               >
-                <option value="Mentee">Mentee</option>
-                <option value="Mentor">Mentor</option>
+                <option value="MENTEE">Mentee</option>
+                <option value="MENTOR">Mentor</option>
               </select>
             </div>
 
@@ -205,33 +223,30 @@ export default function Profile() {
             </button>
           </div>
 
-          <div></div>
         </div>
       )}
       <div className="card h-100">
         <div className="card-header" style={{ textAlign: "left" }}>
-          My Profile
+          Profile
         </div>
         <div className="card-body">
-          <h5 className="card-title" style={{ textAlign: "left" }}>
-            Profile Details
-          </h5>
-          {/* <button
-                className="btn btn-secondary"
-                style={{ marginLeft: "5px", justifyContent: "end" }}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setProfile(profile);
-                }}
-              >
-                Edit */}
-          {/* </button> */}
+          
 
-          <h3>
+          <h3 className="border border-2 border-secondary rounded-pill bg-light  ">
             {profile.firstName} {profile.lastName}
           </h3>
+          {currentUser && currentUser.id !== profile.id &&(
+             <button
+             className="btn btn-primary "
+             style={{ marginLeft: "5px" }}
+            //  onClick={addFollower}
+           >
+             Follow
+           </button>
+           
+          )}
           <div className="field">
-            {currentUser && currentUser.id == profile.id && (
+            {currentUser && currentUser.id === profile.id && (
               <div>
                 <div className="d-flex align-items-center justify-content-between">
                   <p className="">Email: {profile.email} </p>
@@ -249,9 +264,48 @@ export default function Profile() {
             <div className="d-flex align-items-center justify-content-between">
               <p className="">Major: {profile.major}</p>
             </div>
+            <div className="d-flex align-items-center justify-content-between">
+              <p className="">Role: {profile.role}</p>
+            </div>
           </div>
           <hr />
-          <p className="bolded">Co-ops</p>
+          
+          {profile.role==="MENTEE" && (<p className="bolded">Saved Companies</p>)}
+          {profile.role==="MENTOR" && (
+
+<div>
+<div>
+          <p className="bolded">Reviews</p>
+          </div>
+
+          <div className="list-group">
+            
+          {profile?.reviews?.map((review: any) => (
+            <div
+              key={review._id}
+              className="list-group-item d-flex align-items-center justify-content-between"
+            >
+              <p className="card-text">{review.title}</p>
+              <div>
+                <button
+                  className="btn btn-danger"
+                  style={{ marginLeft: "5px" }}
+                  onClick={deleteFollower}
+                >
+                  Unfollow
+                </button>
+              </div>
+            </div>
+            
+          ))}
+     
+     </div>
+     <hr></hr>
+          <p className="bolded">Past Companies</p>
+          </div>
+          
+          )}
+
 
           <div className="list-group">
             {profile?.companies?.map((company: any) => (
@@ -261,24 +315,16 @@ export default function Profile() {
               >
                 <p className="card-text">{company.companyName}</p>
                 <div>
-                  {/* <button
-                    className="btn btn-secondary"
-                    style={{ marginLeft: "5px", justifyContent: "end" }}
-                    // onClick={() => fetchCoopById(coop.id)}
-                  >
-                    Edit
-                  </button> */}
-
+                {currentUser && currentUser.id === profile.id && (
+ <div>
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "5px" }}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      // deleteCoop(coop._id);
-                    }}
+                    onClick={() => deleteCompany(company)}
                   >
                     Delete
                   </button>
+                  </div>)}
                 </div>
               </div>
             ))}
@@ -286,31 +332,44 @@ export default function Profile() {
 
           <hr />
           <p className="bolded">Following</p>
-
           <div className="list-group">
             {profile?.following?.map((follower: any) => (
               <div
                 key={follower._id}
                 className="list-group-item d-flex align-items-center justify-content-between"
               >
-                <p className="card-text"> User {follower.id}</p>
-                <div>
+               <Link to={`/Profile/${follower.id}`}>
+               <p className="card-text"> {follower.firstName} {follower.lastName}</p>
+
+               </Link>
+                {/* <Link to={`/Profile/${follower.id}`} >
+                  
+                <a href={`/Profile/${follower.id}`} className="btn btn-primary">
+            {" "}
+            Profile
+          </a> */}
+                  {/* <button
+                    className="btn btn-danger"
+                    style={{ marginLeft: "5px" }}
+                    // onClick={navigateToProfile(follower.id)}
+                  >
+                    Profile
+                  </button> */}
+                  {currentUser && currentUser.id === profile.id && (
+                  <div>
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "5px" }}
-                    onClick={deleteFollower}
+                    onClick={() => deleteFollower(follower)}
                   >
                     Unfollow
                   </button>
+                  </div>)}
                 </div>
-              </div>
+          
             ))}
           </div>
-
-          <a href="#" className="btn btn-primary">
-            {" "}
-            Button
-          </a>
+          
         </div>
       </div>
     </div>
