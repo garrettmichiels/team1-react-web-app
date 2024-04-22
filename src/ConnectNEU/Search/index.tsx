@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import * as client from "../TheMuse/client";
+import { Link } from "react-router-dom";
 
 interface Jobs {
 	name: string;
@@ -33,8 +34,8 @@ export default function Search() {
 		<h1 className="m-2">Search Results</h1>
 		{results && results.length === 0 && <div className="text-center"><h2>No Results</h2></div>}
 	 {results && results.map((result: any) => (
-			<>
-		<div className="card m-3">
+			
+		<div className="card m-3" key={result.id}>
 			<span className="d-flex">
 				<h5 className="card-title mx-2 pt-2">{result.company.name + " - " + result.name}</h5>
 				<span className="d-flex mb-2 mx-2 p-2">
@@ -47,18 +48,12 @@ export default function Search() {
 				<div>{result.categories[0] && "Category: " + result.categories[0].name}</div>
 				<div>{result.levels[0] && "Level: " + result.levels[0].name}</div>
 				<div className="float-end">
-					
-				<button className="btn btn-primary mx-2">
-						<a href={result.refs.landing_page}></a>
-						Apply
-					</button>
-					<button className="btn btn-primary mx-2" onClick={() => navigate(`/Details/${result.company.id}`)}>
-						Details
-					</button>
+					<a className="btn btn-primary mx-2" href={result.refs.landing_page}>Apply</a>
+					<Link className="btn btn-primary mx-2" to={`/Details/${result.id}`} state={{result}}>Details</Link>
 					</div>
 				</div>
 		</div>
-			</>
+			
 		))} 
 		</>
 	);
