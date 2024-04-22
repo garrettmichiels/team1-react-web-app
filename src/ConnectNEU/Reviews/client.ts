@@ -35,7 +35,7 @@ export const createReview = async (userId: String, companyId: String, review: an
 	return response.data;
 };
 
-export const updateReview = async (reviewId: string, review: any) => {
+export const updateReview = async (reviewId: String, review: any) => {
 	const response = await axios.put(
 		`http://localhost:4000/api/reviews/${reviewId}`,
 		review
@@ -43,14 +43,14 @@ export const updateReview = async (reviewId: string, review: any) => {
 	return response.data;
 };
 
-export const deleteReview = async (reviewId: string) => {
+export const deleteReview = async (reviewId: String) => {
 	const response = await axios.delete(
 		`http://localhost:4000/api/reviews/${reviewId}`
 	);
 	return response.data;
 };
 
-export const findReviewById = async (reviewId: string) => {
+export const findReviewById = async (reviewId: String) => {
 	const response = await axios.get(
 		`http://localhost:4000/api/reviews/${reviewId}`
 	);

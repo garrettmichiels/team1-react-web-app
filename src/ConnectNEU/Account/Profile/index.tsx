@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css"; // Import your CSS file
 import * as client from "../../Users/Client";
-import axios from "axios";
+import * as reviewClient from "../../Reviews/client"
 import { useNavigate, useParams } from "react-router";
-import myUser from "../../Database/myUser.json";
 import { ReactReduxContext, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { User, Company } from "../../Users/Client";
 import { getCompany } from "../../TheMuse/client";
 import { setCurrentUser } from "../../Users/reducer";
-import Review from "../../Reviews";
 import { Link } from "react-router-dom";
+import { Review } from "../../Reviews/client";
 export default function Profile() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -73,6 +72,22 @@ export default function Profile() {
     }
   };
 
+  const deleteReview = async (review: Review) => {
+    console.log(review);
+
+    try {
+      console.log(currentUser.id);
+
+      await reviewClient.deleteReview(review._id);
+      setProfile({
+        ...profile,
+        reviews: profile.reviews.filter((r) => r._id !== review._id),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const deleteCompany = async (company: any) => {
     console.log(company);
 
@@ -129,9 +144,9 @@ export default function Profile() {
   };
 
 
-  const navigateToProfile = async() =>{
-    navigate("/Account/Login");
-  }
+  // const navigateToProfile = async() =>{
+  //   navigate("/Account/Login");
+  // }
 
   const save = async () => {
     // const d = {...profile}
@@ -307,9 +322,9 @@ export default function Profile() {
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "5px" }}
-                    onClick={() => deleteFollower(review)}
+                    onClick={() => deleteReview(review)}
                   >
-                    Unfollow
+                    Delete
                   </button>
                   </div>)}
             </div>
@@ -330,7 +345,9 @@ export default function Profile() {
                 key={company._id}
                 className="list-group-item d-flex align-items-center justify-content-between"
               >
+                <Link to={`/Search/${company.companyName}`}>
                 <p className="card-text">{company.companyName}</p>
+                </Link>
                 <div>
                 {currentUser && currentUser.id === profile.id && (
  <div>
