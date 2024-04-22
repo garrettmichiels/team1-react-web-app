@@ -13,7 +13,6 @@ interface Jobs {
 }
 
 export default function Search() {
-
 	const { query } = useParams<{ query: string }>();
 	const [results, setResults] = useState<any[]>();
 	const navigate = useNavigate();
@@ -25,12 +24,13 @@ export default function Search() {
 			console.log(resultsFromQuery);
 		}
 	};
-  
+
 	useEffect(() => {
 		getJobsFromCompany();
 	}, [query]);
+
 	return(
-		<>
+		<div className="container">
 		{/* <h1 className="m-2">Search Results</h1> */}
 		{results && results.length === 0 && <div className="text-center mt-3"><h2>No Results For That Search</h2></div>}
 
@@ -62,9 +62,7 @@ export default function Search() {
 						</div>
 					</div>
 			</div>
-				
-			))} 
-		</>
+			))}
+		</div>
 	);
 }
-
