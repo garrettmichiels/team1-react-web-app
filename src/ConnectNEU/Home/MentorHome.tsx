@@ -73,9 +73,9 @@ function MentorHome() {
 						<select
 							className="form-select mx-2 mb-2"
 							id="companies-dropdown"
-							value={review.company._id}
+							value={review?.company?._id ?? 0}
 							onChange={(e) => setReviewCompany(e)}>
-							<option>Select A Company</option>
+							<option value={0}>Select A Company</option>
 							{currentUser.companies.map((company: any, index: any) => {
 								return (
 									<option key={index} value={company._id}>
