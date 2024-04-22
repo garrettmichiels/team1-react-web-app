@@ -22,13 +22,15 @@ function MentorHome() {
 	const [review, setReview] = useState<any>(baseReview);
 
 	const setReviewCompany = (e: any) => {
-		const company = currentUser.companies.find(
-			(company: any) => company._id === e.target.value
-		);
-		setReview({
-			...review,
-			company: company,
-		});
+		if (e.target.value !== 0) {
+			const company = currentUser.companies.find(
+				(company: any) => company._id === e.target.value
+			);
+			setReview({
+				...review,
+				company: company,
+			});
+		}
 	};
 
 	const addNewReview = async () => {
@@ -68,10 +70,10 @@ function MentorHome() {
 								setReview({ ...review, title: e.target.value });
 							}}
 						/>
-
 						<select
 							className="form-select mx-2 mb-2"
 							id="companies-dropdown"
+							value={review.company._id}
 							onChange={(e) => setReviewCompany(e)}>
 							<option>Select A Company</option>
 							{currentUser.companies.map((company: any, index: any) => {
@@ -82,7 +84,6 @@ function MentorHome() {
 								);
 							})}
 						</select>
-
 						<span className="rating mb-2 mx-2">
 							{[...Array(5)].map((item, index) => {
 								const givenRating = index;
