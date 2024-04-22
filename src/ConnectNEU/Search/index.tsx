@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import * as museClient from "../TheMuse/client";
 import * as userClient from "../Users/Client";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 interface Jobs {
 	name: string;
@@ -19,6 +20,8 @@ export default function Search() {
 	const { query } = useParams<{ query: string }>();
 	const [results, setResults] = useState<any[]>();
 	const navigate = useNavigate();
+	const { currentUser } = useSelector((state: any) => state.user);
+
 	const getJobsFromCompany = async () => {
 		if (query) {
 			console.log(query);
@@ -28,13 +31,15 @@ export default function Search() {
 		}
 	};
 
-	const addCompany = async (userId: any, companyId: any) => {
+	const addCompany = async (companyId: any) => {
 		try {
-			await userClient.addCompany(userId, companyId);
+			console.log("Add company", currentUser.id, companyId);
+			await userClient.addCompany(currentUser.id, companyId);
 		} catch
 			(err) {
 			console.log(err);
 		}
+	}
 
 	useEffect(() => {
 		getJobsFromCompany();
@@ -46,9 +51,9 @@ export default function Search() {
 		{results && results.length === 0 && <div className="text-center mt-3"><h2>No Results For That Search</h2></div>}
 
 		{results && results.length > 0 && <>
-			<span className="float-end">
-				<button className="btn btn-success m-2">Add Company</button>
-			</span>
+			{currentUser && <span className="float-end">
+				<button className="btn btn-success m-2" onClick={() => addCompany(results[0].company.id)}>Add Company</button>
+			</span>}
 			<h1 className="card-title mx-2 pt-2">Search Results</h1>
 			</>
 		}
@@ -77,3 +82,4 @@ export default function Search() {
 		</div>
 	);
 }
+

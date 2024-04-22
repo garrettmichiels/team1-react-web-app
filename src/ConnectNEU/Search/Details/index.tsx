@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import "./index.css";
 import { useSelector } from "react-redux";
 import * as client from "../../Users/Client";
+import { current } from "@reduxjs/toolkit";
 export default function Details() {
 	const { state } = useLocation();
 	console.log("State", state);
@@ -9,6 +10,7 @@ export default function Details() {
 	const { currentUser } = useSelector((state: any) => state.user);
 	const saveJob = async (jobId: string) => {
 		try {
+            console.log("Save Job", currentUser.id, jobId);
 			await client.addJobToUser(currentUser.id, jobId);
 		} catch (err) {
 			console.log(err);
@@ -19,11 +21,11 @@ export default function Details() {
 		<div className="container">
 			<div style={{ fontSize: "40px" }}>
 				{job.company.name}
-				<button
+				{currentUser && <button
 					className="btn btn-success float-end m-2"
 					onClick={() => saveJob(job.id)}>
 					Save Job
-				</button>
+				</button>}
 			</div>
 
 			<div className="card" key={job.id}>
