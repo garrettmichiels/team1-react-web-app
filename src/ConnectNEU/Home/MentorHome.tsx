@@ -7,19 +7,38 @@ import * as client from "../Reviews/client";
 import { setReview } from "../Reviews/reducer";
 
 function MentorHome() {
-	const dispatch = useDispatch();
+	//const dispatch = useDispatch();
 	//const review = useSelector((state: any) => state.reviews.review);
 	//const reviews = useSelector((state: any) => state.reviews.reviews);
 	const { currentUser } = useSelector((state: any) => state.user);
 	const [reviews, setReviews] = useState<any[]>([]);
-	const [review, setReview] = useState<any>({
+	const baseReview = {
 		user: currentUser,
 		company: { _id: 0 },
-	});
+		stars: 0,
+		description: "",
+		title: "",
+	};
+	const [review, setReview] = useState<any>(baseReview);
+
+	const setReviewCompany = (e: any) => {
+		if (e.target.value !== 0) {
+			const company = currentUser.companies.find(
+				(company: any) => company._id === e.target.value
+			);
+			setReview({
+				...review,
+				company: company,
+			});
+		}
+	};
 
 	const addNewReview = async () => {
-		await client.createReview(review.user._id, review.company._id, review);
-		setReviews([...reviews, review]);
+		if (review.company._id !== 0) {
+			await client.createReview(review.user._id, review.company._id, review);
+			setReviews([review, ...reviews]);
+			setReview(baseReview);
+		}
 	};
 
 	useEffect(() => {
@@ -28,10 +47,10 @@ function MentorHome() {
 			for await (const company of currentUser.companies) {
 				const revs = await client.fetchCompanyReviews(company._id);
 				for (const r of revs) {
-					newReviews = [...newReviews, await client.findReviewById(r)];
+					newReviews = [await client.findReviewById(r), ...newReviews];
 				}
 			}
-			setReviews([...reviews, ...newReviews]);
+			setReviews(newReviews);
 		};
 		fetchCompanyReviews();
 	}, []);
@@ -46,41 +65,25 @@ function MentorHome() {
 							className="flex-grow-1 mb-2 form-control"
 							type="text"
 							placeholder="Title"
+							value={review.title}
 							onChange={(e) => {
 								setReview({ ...review, title: e.target.value });
 							}}
 						/>
-						<span className="dropdown mx-2">
-							<button
-								id="companies-dropdown"
-								type="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false">
-								Select A Company
-							</button>
-							<ul
-								className="dropdown-menu"
-								aria-labelledby="companies-dropdown">
-								{currentUser.companies.map((company: any, index: any) => {
-									return (
-										<li
-											key={index}
-											className={
-												review.company._id === company._id
-													? "dropdown-item .active"
-													: "dropdown-item"
-											}>
-											<label
-												onClick={() =>
-													setReview({ ...review, company: company })
-												}>
-												{company.companyName}
-											</label>
-										</li>
-									);
-								})}
-							</ul>
-						</span>
+						<select
+							className="form-select mx-2 mb-2"
+							id="companies-dropdown"
+							value={review.company._id}
+							onChange={(e) => setReviewCompany(e)}>
+							<option>Select A Company</option>
+							{currentUser.companies.map((company: any, index: any) => {
+								return (
+									<option key={index} value={company._id}>
+										{company.companyName}
+									</option>
+								);
+							})}
+						</select>
 						<span className="rating mb-2 mx-2">
 							{[...Array(5)].map((item, index) => {
 								const givenRating = index;
@@ -120,6 +123,7 @@ function MentorHome() {
 						<textarea
 							className="flex-grow-1 form-control"
 							placeholder="Write a review here"
+							value={review.description}
 							onChange={(e) => {
 								setReview({ ...review, description: e.target.value });
 							}}
