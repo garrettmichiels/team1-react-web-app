@@ -19,7 +19,7 @@ function AnonymousHome() {
 	}, []);
 	return (
 		<div className="p-3">
-			<h2>Sign In To View Recent Reviews</h2>
+			<h2>Sign In To Bookmark Companies</h2>
 			{Array.isArray(reviews) &&
 				reviews.map((r: any, index: any) => {
 					return <Review key={index} review={r} />;
