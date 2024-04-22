@@ -34,12 +34,6 @@ export const loginUser = async (user: any) => {
   return response.data;
 };
 
-
-// export const signin = async (credentials: User) => {
-//   const response = await axiosWithCredentials.post( `${USERS_API}/signin`, credentials );
-//   return response.data;
-// };
-
 export const addCompany = async (userId: any, companyId: any) => {
   const response = await axiosWithCredentials.put(
     `${USERS_API}/${userId}/companies/${companyId}`);

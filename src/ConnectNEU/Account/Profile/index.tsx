@@ -174,6 +174,7 @@ export default function Profile() {
               <label>First Name:</label>
               <input
                 value={editedProfile.firstName}
+                placeholder="First Name"
                 onChange={(e) =>
                   setEditedProfile({
                     ...editedProfile,
@@ -186,6 +187,7 @@ export default function Profile() {
               <label>Last Name:</label>
               <input
                 value={editedProfile.lastName}
+                placeholder="Last Name"
                 onChange={(e) =>
                   setEditedProfile({
                     ...editedProfile,
@@ -199,6 +201,7 @@ export default function Profile() {
               <label>Email:</label>
               <input
                 value={editedProfile.email}
+                placeholder="Email"
                 onChange={(e) =>
                   setEditedProfile({ ...editedProfile, email: e.target.value })
                 }
@@ -210,6 +213,7 @@ export default function Profile() {
               <input
                 value={editedProfile.dob}
                 type="date"
+                placeholder="DOB"
                 onChange={(e) =>
                   setEditedProfile({ ...editedProfile, dob: e.target.value })
                 }
@@ -220,6 +224,7 @@ export default function Profile() {
               <label>Phone Number:</label>
               <input
                 value={editedProfile.number}
+                placeholder="Number"
                 onChange={(e) =>
                   setEditedProfile({ ...editedProfile, number: e.target.value })
                 }
@@ -230,6 +235,7 @@ export default function Profile() {
               <label>Major:</label>
               <input
                 value={editedProfile.major}
+                placeholder="Major"
                 onChange={(e) =>
                   setEditedProfile({ ...editedProfile, major: e.target.value })
                 }
