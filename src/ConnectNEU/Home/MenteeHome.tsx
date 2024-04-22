@@ -12,7 +12,7 @@ function MenteeHome() {
 			let newReviews = [] as any[];
 			console.log("user is following", currentUser.following);
 			for await (const user of currentUser.following) {
-				const revs = await client.fetchUserReviews(user);
+				const revs = await client.fetchUserReviews(user._id);
 				console.log("user reviews", revs);
 				for (const r of revs) {
 					const newRev = await client.findReviewById(r);
