@@ -31,7 +31,7 @@ export default function Search() {
 	return(
 		<>
 		<h1 className="m-2">Search Results</h1>
-		{!results && <p>No Results</p>}
+		{results && results.length === 0 && <div className="text-center"><h2>No Results</h2></div>}
 	 {results && results.map((result: any) => (
 			<>
 		<div className="card m-3">
