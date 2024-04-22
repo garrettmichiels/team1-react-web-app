@@ -15,14 +15,20 @@ function MenteeHome() {
 				const revs = await client.fetchUserReviews(user);
 				console.log("user reviews", revs);
 				for (const r of revs) {
-					newReviews = [...newReviews, await client.findReviewById(r)];
+					const newRev = await client.findReviewById(r);
+					if (newRev !== null) {
+						newReviews = [newRev, ...newReviews];
+					}
 				}
 			}
 			for await (const company of currentUser.companies) {
 				const revs = await client.fetchCompanyReviews(company._id);
 				console.log("company reviews", revs);
 				for (const r of revs) {
-					newReviews = [...newReviews, await client.findReviewById(r)];
+					const newRev = await client.findReviewById(r);
+					if (newRev !== null) {
+						newReviews = [newRev, ...newReviews];
+					}
 				}
 			}
 			setReviews([...reviews, ...newReviews]);
