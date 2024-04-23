@@ -3,29 +3,54 @@ import "./index.css";
 import { useSelector } from "react-redux";
 import * as client from "../../Users/Client";
 import { current } from "@reduxjs/toolkit";
+import { useEffect, useState } from "react";
+import * as reviewClient from "../../Reviews/client";
+import Review from "../../Reviews";
 export default function Details() {
 	const { state } = useLocation();
 	console.log("State", state);
 	const job = state.result;
 	const { currentUser } = useSelector((state: any) => state.user);
+	const [reviews, setReviews] = useState<any[]>([]);
+
 	const saveJob = async (jobId: string) => {
 		try {
-            console.log("Save Job", currentUser.id, jobId);
+			console.log("Save Job", currentUser.id, jobId);
 			await client.addJobToUser(currentUser.id, jobId);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-    return (
+	useEffect(() => {
+		const fetchCompanyReviews = async () => {
+			let newReviews = [] as any[];
+			const revs = await reviewClient.fetchCompanyReviews(job.company.id);
+			if (revs != null) {
+				for (const r of revs) {
+					const newRev = await reviewClient.findReviewById(r);
+					if (newRev !== null) {
+						newReviews = [newRev, ...newReviews];
+					}
+				}
+				setReviews(newReviews);
+				console.log(newReviews);
+			}
+		};
+		fetchCompanyReviews();
+	}, []);
+
+	return (
 		<div className="container">
 			<div style={{ fontSize: "40px" }}>
 				{job.company.name}
-				{currentUser && <button
-					className="btn btn-success float-end m-2"
-					onClick={() => saveJob(job.id)}>
-					Save Job
-				</button>}
+				{currentUser && (
+					<button
+						className="btn btn-success float-end m-2"
+						onClick={() => saveJob(job.id)}>
+						Save Job
+					</button>
+				)}
 			</div>
 
 			<div className="card" key={job.id}>
@@ -57,8 +82,9 @@ export default function Details() {
 						}}></div>
 				</div>
 			</div>
+			{reviews.map((r, index) => {
+				return <Review key={index} review={r} />;
+			})}
 		</div>
-
 	);
 }
-
