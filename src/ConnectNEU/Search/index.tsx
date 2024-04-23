@@ -31,13 +31,13 @@ export default function Search() {
 
 	const addCompany = async (company: any) => {
 		try {
-			const newCompany = {
-				companyId: company.id,
-				companyName: company.name,
-				reviews: [],
-			};
-			console.log("Add company", currentUser._id, newCompany);
-			await userClient.addCompany(currentUser._id, newCompany);
+			console.log("company", company);
+			const updatedUser = {
+				...currentUser,
+				companies: [...currentUser.companies, company._id]}
+				
+			console.log("Add company", currentUser._id, company._id);
+			await userClient.updateUser(updatedUser);
 		} catch (err) {
 			console.log(err);
 		}

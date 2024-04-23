@@ -9,8 +9,8 @@ function App() {
 	return (
 		<div className="App">
 			<Provider store={store}>
-<CurrentUser>
-	<ConnectNEU/>
+			<CurrentUser>
+				<ConnectNEU/>
 			{/* <HashRouter>
 				<Navigation />
 				<Routes>
