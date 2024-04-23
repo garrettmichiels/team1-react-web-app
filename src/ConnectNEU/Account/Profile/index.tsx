@@ -202,7 +202,7 @@ export default function Profile() {
 						<div className="edit-field">
 							<label>DOB:</label>
 							<input
-								value={editedProfile.dob}
+								value={editedProfile.dob.replace("T00:00:00.000Z", "")}
 								type="date"
 								placeholder="DOB"
 								onChange={(e) =>
