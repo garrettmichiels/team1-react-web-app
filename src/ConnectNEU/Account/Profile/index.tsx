@@ -215,7 +215,7 @@ export default function Profile() {
 						<div className="edit-field">
 							<label>DOB:</label>
 							<input
-								value={editedProfile.dob}
+								value={editedProfile.dob.replace("T00:00:00.000Z", "")}
 								type="date"
 								placeholder="DOB"
 								onChange={(e) =>
@@ -291,7 +291,7 @@ export default function Profile() {
 								</div>
 
 								<div className="d-flex align-items-center justify-content-between">
-									<p className="">DOB: {profile.dob}</p>
+									<p className="">DOB: {profile.dob.replace("T00:00:00.000Z", "")}</p>
 								</div>
 							</div>
 						)}
