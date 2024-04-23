@@ -15,7 +15,7 @@ function MenteeHome() {
 				const revs = await client.fetchUserReviews(user._id);
 				console.log("user reviews", revs);
 				for (const r of revs) {
-					const newRev = await client.findReviewById(r);
+					const newRev = await client.findReviewById(r._id);
 					if (newRev !== null) {
 						newReviews = [newRev, ...newReviews];
 					}
