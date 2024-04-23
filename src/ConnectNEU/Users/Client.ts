@@ -6,7 +6,7 @@ const axiosWithCredentials = axios.create({
 });
 const USERS_API = "http://localhost:4000/api/users";
 
-export interface User { id: string, username: string; password: string;
+export interface User { _id: string, id: string, username: string; password: string;
   firstName: string, lastName: string, number: string, email: string, dob:string, role: string; major: string,
   reviews: Review[],
   following: User[],

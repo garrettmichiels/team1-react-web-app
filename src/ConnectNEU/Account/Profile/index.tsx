@@ -20,7 +20,8 @@ export default function Profile() {
 	const dispatch = useDispatch();
 
 	const [profile, setProfile] = useState<User>({
-		id: "",
+    _id:"",
+    id: "",
 		username: "",
 		password: "",
 		firstName: "",
@@ -36,7 +37,8 @@ export default function Profile() {
 	});
 
 	const [editedProfile, setEditedProfile] = useState<User>({
-		id: "",
+		_id: "",
+    id:"",
 		username: "",
 		password: "",
 		firstName: "",
@@ -59,19 +61,42 @@ export default function Profile() {
 
 	const deleteFollower = async (follower: any) => {
 		console.log(follower);
+  try{    
+  const updatedUser = {
+      ...currentUser,
+      following: currentUser.following.filter((f:any) => f.id !== follower.id)};
+  
+    await client.updateUser(updatedUser);
+    fetchProfile();
+  } catch (err) {
+    console.log(err);
+  }
+};
 
+	const addFollower = async (followerId: any) => {
 		try {
-			console.log(currentUser.id);
-
-			await client.deleteFollower(currentUser.id, follower.id);
-			setProfile({
-				...profile,
-				following: profile.following.filter((f) => f.id !== follower.id),
-			});
+      const updatedUser = {
+        ...currentUser,
+        following: [...currentUser.following, followerId] // Append new followerId to the existing following array
+      };
+			await client.updateUser(updatedUser);
 		} catch (err) {
 			console.log(err);
 		}
 	};
+
+
+		// try {
+		// 	console.log(currentUser.id);
+		// 	setProfile({
+		// 		...profile,
+		// 		following: profile.following.filter((f) => f.id !== follower.id),
+		// 	});
+    //   await client.updateUser(profile);
+		// } catch (err) {
+		// 	console.log(err);
+		// }
+	
 
 	const deleteReview = async (review: Review) => {
 		console.log(review);
@@ -100,14 +125,6 @@ export default function Profile() {
 				...profile,
 				following: profile.following.filter((f) => f.id !== company.id),
 			});
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const addFollower = async (followerId: any) => {
-		try {
-			await client.addFollower(currentUser.id, followerId);
 		} catch (err) {
 			console.log(err);
 		}
@@ -145,13 +162,13 @@ export default function Profile() {
 	const save = async () => {
 		console.log("profile before saving edits", currentUser);
 		await client.updateUser(editedProfile);
-		setProfile(editedProfile);
+    fetchProfile();
 		console.log("profile after saving edits", currentUser);
 	};
 
 	useEffect(() => {
 		fetchProfile();
-	}, [id]);
+	}, []);
 
 	if (!profile) {
 		return <div>Loading...</div>;
@@ -259,11 +276,11 @@ export default function Profile() {
 					<h3 className="border border-2 border-secondary rounded-pill bg-light  ">
 						{profile.firstName} {profile.lastName}
 					</h3>
-					{currentUser && currentUser.id !== profile.id && (
+					{currentUser && currentUser._id !== profile._id && (
 						<button
 							className="btn btn-primary "
 							style={{ marginLeft: "5px" }}
-							onClick={() => addFollower(profile.id)}>
+							onClick={() => addFollower(profile._id)}>
 							Follow
 						</button>
 					)}
