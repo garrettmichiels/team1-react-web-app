@@ -85,6 +85,7 @@ export const signup = async (user : any) => {
 };
 
 export const updateUser = async (user: any) => {
+  console.log("editing user ", user._id, "to be ", user)
   const response = await axiosWithCredentials.put(
     `http://localhost:4000/api/users/${user._id}`,
     user
