@@ -119,12 +119,12 @@ export default function Profile() {
 
 		try {
 			console.log(currentUser.id);
-
-			await client.deleteFollower(currentUser.id, company.id);
-			setProfile({
-				...profile,
-				following: profile.following.filter((f) => f.id !== company.id),
-			});
+      const updatedUser = {
+        ...currentUser,
+        companies: profile.companies.filter((f) => f.id !== company.id)}
+		
+        await client.updateUser(updatedUser);
+        fetchProfile();
 		} catch (err) {
 			console.log(err);
 		}
@@ -154,10 +154,6 @@ export default function Profile() {
 			}
 		}
 	};
-
-	// const navigateToProfile = async() =>{
-	//   navigate("/Account/Login");
-	// }
 
 	const save = async () => {
 		console.log("profile before saving edits", currentUser);
@@ -219,7 +215,7 @@ export default function Profile() {
 						<div className="edit-field">
 							<label>DOB:</label>
 							<input
-								value={editedProfile.dob.replace("T00:00:00.000Z", "")}
+								value={editedProfile.dob}
 								type="date"
 								placeholder="DOB"
 								onChange={(e) =>
