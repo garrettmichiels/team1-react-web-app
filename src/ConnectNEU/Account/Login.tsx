@@ -37,8 +37,12 @@ export default function Login() {
 			dispatch(setCurrentUser(newUser));
 			navigate("/Account/Profile");
 		} catch (error: any) {
+			if(error.response.status===401){
+				setError("User Not Found");
+			}else{
 			console.error(error);
 			setError(error.message);
+			}
 		}
 	};
 
