@@ -15,6 +15,19 @@ export default function Login() {
 		following: [],
 		coops: [],
 	});
+
+	const [registerUser, setRegisterUser] = useState({
+		username: "",
+		password: "",
+		email: "",
+		firstName: "",
+		lastName: "",
+		role: "MENTEE",
+		major: "",
+		following: [],
+		coops: [],
+	});
+
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -31,7 +44,7 @@ export default function Login() {
 
     const register = async () => {
 		try {
-			const newUser = await userClient.registerUser(user);
+			const newUser = await userClient.registerUser(registerUser);
 			dispatch(setCurrentUser(newUser));
 			navigate("/Account/Profile");
 		} catch (error: any) {
@@ -73,8 +86,8 @@ export default function Login() {
 						Enter Your Email
 					</h4>
 					<input
-						onChange={(e) => setUser({ ...user, email: e.target.value })}
-						value={user.email}
+						onChange={(e) => setRegisterUser({ ...registerUser, email: e.target.value })}
+						value={registerUser.email}
 						type="text"
 						className="form-control mt-2"
 						placeholder="Email"
@@ -82,32 +95,32 @@ export default function Login() {
 
 					<h4 style={{ textAlign: "left" }}>Enter Your First Name</h4>
 					<input
-						onChange={(e) => setUser({ ...user, firstName: e.target.value })}
-						value={user.firstName}
+						onChange={(e) => setRegisterUser({ ...registerUser, firstName: e.target.value })}
+						value={registerUser.firstName}
 						type="text"
 						className="form-control mt-2"
 						placeholder="First Name"
 					/>
 					<h4 style={{ textAlign: "left" }}>Enter Your Last Name</h4>
 					<input
-						onChange={(e) => setUser({ ...user, lastName: e.target.value })}
-						value={user.lastName}
+						onChange={(e) => setRegisterUser({ ...registerUser, lastName: e.target.value })}
+						value={registerUser.lastName}
 						type="text"
 						className="form-control mt-2"
 						placeholder="Last Name"
 					/>
 					<h4 style={{ textAlign: "left" }}>Enter a Username</h4>
 					<input
-						onChange={(e) => setUser({ ...user, username: e.target.value })}
-						value={user.username}
+						onChange={(e) => setRegisterUser({ ...registerUser, username: e.target.value })}
+						value={registerUser.username}
 						type="text"
 						className="form-control"
 						placeholder="Username"
 					/>
 					<h4 style={{ textAlign: "left" }}>Enter a Password</h4>
 					<input
-						onChange={(e) => setUser({ ...user, password: e.target.value })}
-						value={user.password}
+						onChange={(e) => setRegisterUser({ ...registerUser, password: e.target.value })}
+						value={registerUser.password}
 						type="password"
 						className="form-control"
 						placeholder="Password"
