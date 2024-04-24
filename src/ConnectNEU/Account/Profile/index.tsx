@@ -20,8 +20,8 @@ export default function Profile() {
 	const dispatch = useDispatch();
 
 	const [profile, setProfile] = useState<User>({
-    _id:"",
-    id: "",
+		_id: "",
+		id: "",
 		username: "",
 		password: "",
 		firstName: "",
@@ -38,7 +38,7 @@ export default function Profile() {
 
 	const [editedProfile, setEditedProfile] = useState<User>({
 		_id: "",
-    id:"",
+		id: "",
 		username: "",
 		password: "",
 		firstName: "",
@@ -61,42 +61,43 @@ export default function Profile() {
 
 	const deleteFollower = async (follower: any) => {
 		console.log(follower);
-  try{    
-  const updatedUser = {
-      ...currentUser,
-      following: currentUser.following.filter((f:any) => f.id !== follower.id)};
-  
-    await client.updateUser(updatedUser);
-    fetchProfile();
-  } catch (err) {
-    console.log(err);
-  }
-};
+		try {
+			const updatedUser = {
+				...currentUser,
+				following: currentUser.following.filter(
+					(f: any) => f.id !== follower.id
+				),
+			};
+
+			await client.updateUser(updatedUser);
+			fetchProfile();
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	const addFollower = async (followerId: any) => {
 		try {
-      const updatedUser = {
-        ...currentUser,
-        following: [...currentUser.following, followerId] // Append new followerId to the existing following array
-      };
+			const updatedUser = {
+				...currentUser,
+				following: [...currentUser.following, followerId], // Append new followerId to the existing following array
+			};
 			await client.updateUser(updatedUser);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-
-		// try {
-		// 	console.log(currentUser.id);
-		// 	setProfile({
-		// 		...profile,
-		// 		following: profile.following.filter((f) => f.id !== follower.id),
-		// 	});
-    //   await client.updateUser(profile);
-		// } catch (err) {
-		// 	console.log(err);
-		// }
-	
+	// try {
+	// 	console.log(currentUser.id);
+	// 	setProfile({
+	// 		...profile,
+	// 		following: profile.following.filter((f) => f.id !== follower.id),
+	// 	});
+	//   await client.updateUser(profile);
+	// } catch (err) {
+	// 	console.log(err);
+	// }
 
 	const deleteReview = async (review: Review) => {
 		console.log(review);
@@ -119,12 +120,13 @@ export default function Profile() {
 
 		try {
 			console.log(currentUser.id);
-      const updatedUser = {
-        ...currentUser,
-        companies: profile.companies.filter((f) => f.id !== company.id)}
-		
-        await client.updateUser(updatedUser);
-        fetchProfile();
+			const updatedUser = {
+				...currentUser,
+				companies: profile.companies.filter((f) => f.id !== company.id),
+			};
+
+			await client.updateUser(updatedUser);
+			fetchProfile();
 		} catch (err) {
 			console.log(err);
 		}
@@ -158,7 +160,7 @@ export default function Profile() {
 	const save = async () => {
 		console.log("profile before saving edits", currentUser);
 		await client.updateUser(editedProfile);
-    fetchProfile();
+		fetchProfile();
 		console.log("profile after saving edits", currentUser);
 	};
 
@@ -291,7 +293,9 @@ export default function Profile() {
 								</div>
 
 								<div className="d-flex align-items-center justify-content-between">
-									<p className="">DOB: {profile.dob.replace("T00:00:00.000Z", "")}</p>
+									<p className="">
+										DOB: {profile.dob.replace("T00:00:00.000Z", "")}
+									</p>
 								</div>
 							</div>
 						)}
@@ -318,8 +322,12 @@ export default function Profile() {
 								{profile?.reviews?.map((review: any) => (
 									<div
 										key={review._id}
-										className="list-group-item d-flex align-items-center justify-content-between">
-										<p className="card-text">{review.title}</p>
+										className="list-group-item my-2 d-flex flex-fill align-items-center justify-content-between">
+										<div className="d-block flex-fill">
+											<p className="card-title bolded">{review.title}</p>
+											<hr />
+											<p className="card-text">{review.description}</p>
+										</div>
 										{currentUser && currentUser.id === profile.id && (
 											<div>
 												<button
@@ -342,7 +350,7 @@ export default function Profile() {
 						{profile?.companies?.map((company: any) => (
 							<div
 								key={company._id}
-								className="list-group-item d-flex align-items-center justify-content-between">
+								className="list-group-item my-2 d-flex align-items-center justify-content-between">
 								<Link to={`/Search/${company.companyName}`}>
 									<p className="card-text">{company.companyName}</p>
 								</Link>
@@ -368,7 +376,7 @@ export default function Profile() {
 						{profile?.following?.map((follower: any) => (
 							<div
 								key={follower._id}
-								className="list-group-item d-flex align-items-center justify-content-between">
+								className="list-group-item my-2 d-flex align-items-center justify-content-between">
 								<Link to={`/Profile/${follower.id}`}>
 									<p className="card-text">
 										{" "}
