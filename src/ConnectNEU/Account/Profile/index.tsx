@@ -85,19 +85,6 @@ export default function Profile() {
 		}
 	};
 
-
-		// try {
-		// 	console.log(currentUser.id);
-		// 	setProfile({
-		// 		...profile,
-		// 		following: profile.following.filter((f) => f.id !== follower.id),
-		// 	});
-    //   await client.updateUser(profile);
-		// } catch (err) {
-		// 	console.log(err);
-		// }
-	
-
 	const deleteReview = async (review: Review) => {
 		console.log(review);
 
