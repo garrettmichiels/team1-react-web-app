@@ -41,7 +41,7 @@ export default function Navigation() {
 							</Link>
 						</li>
 					</ul>
-					<form className="d-flex" role="search">
+					<form className="d-flex w-50" role="search">
 						<input
 							className="form-control me-2"
 							type="search"
