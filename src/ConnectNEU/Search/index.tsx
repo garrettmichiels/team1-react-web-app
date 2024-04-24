@@ -32,11 +32,16 @@ export default function Search() {
 
 	const addCompany = async (company: any) => {
 		try {
-			let companyToAdd = null;
-			try {
-				companyToAdd = await companyClient.findByMuseId(company.id);
-			} catch (e) {
-				companyToAdd = await companyClient.createCompany(company);
+			console.log("company being added is", company);
+			let companyToAdd = await companyClient.findByMuseId(company.id);
+			if (companyToAdd === null) {
+				console.log("creating the company");
+				const companyWithFields = {
+					companyId: company.id,
+					companyName: company.name,
+					reviews: [],
+				};
+				companyToAdd = await companyClient.createCompany(companyWithFields);
 			}
 			console.log("company", companyToAdd);
 			const updatedUser = {
