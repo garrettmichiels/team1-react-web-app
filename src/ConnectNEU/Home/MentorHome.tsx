@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./index.css";
 import Review from "../Reviews";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import * as client from "../Reviews/client";
-import { setReview } from "../Reviews/reducer";
+import * as userClient from "../Users/Client";
 
 function MentorHome() {
 	//const dispatch = useDispatch();
@@ -35,7 +35,19 @@ function MentorHome() {
 
 	const addNewReview = async () => {
 		if (review.company._id !== 0) {
-			await client.createReview(review.user._id, review.company._id, review);
+			const newReview = await client.createReview(
+				review.user._id,
+				review.company._id,
+				review
+			);
+			const newReviewId = newReview._id;
+			let userReviews = [] as any[];
+			userReviews = await client.fetchUserReviews(currentUser._id);
+			const updatedUser = {
+				...currentUser,
+				reviews: userReviews,
+			};
+			await userClient.updateUser(updatedUser);
 			setReviews([review, ...reviews]);
 			setReview(baseReview);
 		}
