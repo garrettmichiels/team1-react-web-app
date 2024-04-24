@@ -17,10 +17,11 @@ export interface User { _id: string, id: string, username: string; password: str
   
       
 export const registerUser = async (user: any) => {
-  console.log("registering person ", user)
+  const newUser = {...user, id: (Math.random() * 1000)}
+  console.log("registering person ", newUser)
   const response = await axiosWithCredentials.post(
     "http://localhost:4000/api/users/register",
-    user
+    newUser
   );
   return response.data;
 };
@@ -81,8 +82,7 @@ export const logout = async () => {
 
 
 export const signup = async (user : any) => {
-  const newUser = {...user, id: Math.random()}
-  const response = await axios.post(`${USERS_API}/signup`, newUser);
+  const response = await axios.post(`${USERS_API}/signup`, user);
   return response.data;
 };
 
