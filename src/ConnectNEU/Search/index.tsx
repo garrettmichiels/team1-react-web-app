@@ -4,6 +4,7 @@ import * as museClient from "../TheMuse/client";
 import * as userClient from "../Users/Client";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import * as companyClient from "./client";
 
 interface Jobs {
 	name: string;
@@ -31,12 +32,19 @@ export default function Search() {
 
 	const addCompany = async (company: any) => {
 		try {
-			console.log("company", company);
+			let companyToAdd = null;
+			try {
+				companyToAdd = await companyClient.findByMuseId(company.id);
+			} catch (e) {
+				companyToAdd = await companyClient.createCompany(company);
+			}
+			console.log("company", companyToAdd);
 			const updatedUser = {
 				...currentUser,
-				companies: [...currentUser.companies, company._id]}
-				
-			console.log("Add company", currentUser._id, company._id);
+				companies: [...currentUser.companies, companyToAdd._id],
+			};
+
+			console.log("Add company", currentUser._id, companyToAdd._id);
 			await userClient.updateUser(updatedUser);
 		} catch (err) {
 			console.log(err);
