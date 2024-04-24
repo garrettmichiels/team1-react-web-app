@@ -81,7 +81,8 @@ export const logout = async () => {
 
 
 export const signup = async (user : any) => {
-  const response = await axios.post(`${USERS_API}/signup`, user);
+  const newUser = {...user, id: Math.random()}
+  const response = await axios.post(`${USERS_API}/signup`, newUser);
   return response.data;
 };
 
