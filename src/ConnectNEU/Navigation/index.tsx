@@ -6,7 +6,8 @@ export default function Navigation() {
 	const navigate = useNavigate();
 	const navigateToSearch = () => {
 		if (search) {
-			const searchCamelCase = search.substring(0, 1).toUpperCase() + search.substring(1);
+			const searchCamelCase =
+				search.substring(0, 1).toUpperCase() + search.substring(1);
 			navigate(`/Search/${searchCamelCase}`);
 		}
 	};
@@ -33,15 +34,10 @@ export default function Navigation() {
 								Home
 							</Link>
 						</li>
-						
+
 						<li className="nav-item">
 							<Link to={"/Account/Profile"} className="nav-link">
 								Profile
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link to={"/Account"} className="nav-link">
-								Account
 							</Link>
 						</li>
 					</ul>
@@ -53,7 +49,10 @@ export default function Navigation() {
 							aria-label="Search"
 							onChange={(e) => setSearch(e.target.value)}
 						/>
-						<button className="btn btn-outline-success" type="submit" onClick={navigateToSearch}>
+						<button
+							className="btn btn-outline-success"
+							type="submit"
+							onClick={navigateToSearch}>
 							Search
 						</button>
 					</form>
