@@ -263,6 +263,14 @@ export default function Profile() {
 							{" "}
 							Save
 						</button>
+						{currentUser && currentUser.id === profile.id && (
+							<button
+								className="btn btn-danger"
+								style={{ marginLeft: "5px" }}
+								onClick={logout}>
+								Logout
+							</button>
+					)}
 					</div>
 				</div>
 			)}
@@ -396,17 +404,6 @@ export default function Profile() {
 							</div>
 						))}
 					</div>
-
-					{currentUser && currentUser.id === profile.id && (
-						<div>
-							<button
-								className="btn btn-danger"
-								style={{ marginLeft: "5px" }}
-								onClick={logout}>
-								Logout
-							</button>
-						</div>
-					)}
 				</div>
 			</div>
 		</div>

@@ -59,10 +59,10 @@ export default function Login() {
 	return (
 		<div className="container">
 			<div className="row align-items-center">
+				{error && <div className="alert alert-danger m-3">{error}</div>}
 				<div className="col align-items-center">
 					<div className="align-items-center">
 						<h1>Login</h1>
-						{error && <div className="alert alert-danger">{error}</div>}
 						<input
 							onChange={(e) => setUser({ ...user, username: e.target.value })}
 							value={user.username}
@@ -85,7 +85,6 @@ export default function Login() {
 				</div>
 				<div className="col">
 					<h2 className="mt-4">Don't have an account? Register Here</h2>
-					{error && <div className="alert alert-danger">{error}</div>}
 					<h4 className="mt-4" style={{ textAlign: "left" }}>
 						Enter Your Email
 					</h4>
