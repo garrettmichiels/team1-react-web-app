@@ -226,7 +226,7 @@ export default function Profile() {
 							/>
 						</div>
 
-						<div className="edit-field">
+						{/* <div className="edit-field">
 							<label>Phone Number:</label>
 							<input
 								value={editedProfile.number}
@@ -235,7 +235,7 @@ export default function Profile() {
 									setEditedProfile({ ...editedProfile, number: e.target.value })
 								}
 							/>
-						</div>
+						</div> */}
 
 						<div className="edit-field">
 							<label>Major:</label>
@@ -250,7 +250,7 @@ export default function Profile() {
 
 						<div className="edit-field">
 							<label>Role:</label>
-							<select
+							<select value={editedProfile.role}
 								onChange={(e) =>
 									setEditedProfile({ ...editedProfile, role: e.target.value })
 								}>
@@ -288,9 +288,9 @@ export default function Profile() {
 								<div className="d-flex align-items-center justify-content-between">
 									<p className="">Email: {profile.email} </p>
 								</div>
-								<div className="d-flex align-items-center justify-content-between">
+								{/* <div className="d-flex align-items-center justify-content-between">
 									<p className="">Phone Number: {profile.number}</p>
-								</div>
+								</div> */}
 
 								<div className="d-flex align-items-center justify-content-between">
 									<p className="">
